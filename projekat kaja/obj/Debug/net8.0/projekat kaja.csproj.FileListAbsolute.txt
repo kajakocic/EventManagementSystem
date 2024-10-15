@@ -1,0 +1,33 @@
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\appsettings.json
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\projekat kaja.exe
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\projekat kaja.deps.json
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\projekat kaja.runtimeconfig.json
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\projekat kaja.dll
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\projekat kaja.pdb
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Nignite\Desktop\projekat kaja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.csproj.AssemblyReference.cache
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.AssemblyInfoInputs.cache
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.AssemblyInfo.cs
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.csproj.CoreCompileInputs.cache
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets\msbuild.projekat kaja.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets\msbuild.build.projekat kaja.props
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.projekat kaja.props
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.projekat kaja.props
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\scopedcss\bundle\projekat kaja.styles.css
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat.E5AAFEB8.Up2Date
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.dll
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\refint\projekat kaja.dll
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.pdb
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\projekat kaja.genruntimeconfig.cache
+C:\Users\Nignite\Desktop\projekat kaja\obj\Debug\net8.0\ref\projekat kaja.dll
