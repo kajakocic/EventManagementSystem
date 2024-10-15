@@ -1,0 +1,2 @@
+# EventManagementSystem
+Nignite praksa 
