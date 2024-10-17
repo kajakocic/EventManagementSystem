@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using projekat_kaja.Models;
 
 namespace projekat_kaja.Controllers;
 
+[Route("api/[controller]")]
 [ApiController]
-[Route("[controller]")]
 public class EventController : ControllerBase
 {
     public EMSContext Context { get; set; }
@@ -15,29 +16,12 @@ public class EventController : ControllerBase
     }
 
     //metode
-    [Route("AddEvent")]
     [HttpPost]
-    public async Task<ActionResult> AddEvent([FromBody] Event dogadjaj)
+    public async Task<ActionResult<Event>> AddEvent([FromBody] Event dogadjaj)
     {
-        if (string.IsNullOrWhiteSpace(dogadjaj.Naziv) || dogadjaj.Naziv.Length > 50)
+        if (!ModelState.IsValid)
         {
-            return BadRequest("Neispravan naziv dogadjaja.");
-        }
-        if (dogadjaj.Datum < DateTime.Now)
-        {
-            return BadRequest("Neispravan datum.");
-        }
-        if (string.IsNullOrWhiteSpace(dogadjaj.Opis))
-        {
-            return BadRequest("Opis doogadjaja je obavezan.");
-        }
-        if (dogadjaj.CenaKarte < 0 || dogadjaj.CenaKarte > 100000)
-        {
-            return BadRequest("Cena karte ide do 100 000din, karta takodje moze biti besplatna.");
-        }
-        if (string.IsNullOrWhiteSpace(dogadjaj.URLimg) || !Uri.IsWellFormedUriString(dogadjaj.URLimg, UriKind.Absolute))
-        {
-            return BadRequest("Neispravan URL slike.");
+            return BadRequest(ModelState);
         }
 
         try
@@ -45,7 +29,138 @@ public class EventController : ControllerBase
             Context.Events.Add(dogadjaj);
             await Context.SaveChangesAsync();
 
-            return Ok($"Dogadjaj je dodat. ID:{dogadjaj.ID}");
+            //da li treba da se prikazuje id? ako ne sta drugo da vratim
+            //return Ok($"Dogadjaj je dodat. ID:{dogadjaj.ID}");
+            return CreatedAtAction(nameof(AddEvent), new { id = dogadjaj.ID }, dogadjaj);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [Route("GetEvents")]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+    {
+        try
+        {
+            return await Context.Events.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [Route("GetEventByID/{id}")]
+    //[HttpGet("{id}")]
+    [HttpGet]
+    //da li da dodajem produces responce type
+    /* [ProducesResponseType(typeof(Event), StatusCodes.Status200OK)]  
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]*/
+    public async Task<ActionResult<Event>> GetEventByID(int id)
+    {
+        if (id <= 0)
+        {
+            return BadRequest("Neispravan ID.");
+        }
+        try
+        {
+            //dali ovde treba da filtriram reviews po oceni? akjo ne ovde gde?
+            var ev = await Context.Events.FindAsync(id);
+
+            if (ev == null)
+            {
+                return NotFound();
+            }
+
+            return ev;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [Route("SortEvents")]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Event>>> SortEvents(
+            DateTime? datum = null,
+            TimeSpan? vreme = null,
+            string? kategorija = null,
+            string? lokacija = null)
+    {
+        try
+        {
+            var query = Context.Events.AsQueryable();
+
+            if (datum.HasValue)
+            {
+                query = query.Where(e => e.Datum.Date == datum.Value.Date);
+            }
+            if (vreme.HasValue)
+            {
+                query = query.Where(e => e.Vreme == vreme.Value);
+            }
+            //da li su dobre kategorija i lokacija
+            if (!string.IsNullOrWhiteSpace(kategorija))
+            {
+                query = query.Where(e => e.KategorijaEvent != null
+                                      && e.KategorijaEvent.Naziv == kategorija);
+            }
+            if (!string.IsNullOrWhiteSpace(lokacija))
+            {
+                query = query.Where(e => e.LocationEvent != null
+                                      && e.LocationEvent.Naziv == lokacija);
+            }
+            //kako da implementiram sortiranje po ceni? ovde ili na frontendu
+            return await query.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<Event>> IzmeniEvent([FromBody] Event ev)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        try
+        {
+            Context.Events.Update(ev);
+            await Context.SaveChangesAsync();
+            //return Ok($"Event je izmenjen. ID:{ev.ID}");
+            return CreatedAtAction(nameof(IzmeniEvent), new { id = ev.ID }, ev);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> ObrisiEvent(int id)
+    {
+        if (id <= 0)
+        {
+            return BadRequest("Neispravan ID.");
+        }
+        try
+        {
+            var obrisi = await Context.Events.FindAsync(id);
+            var nazivObrisanog = "";
+            if (obrisi != null)
+            {
+                nazivObrisanog = obrisi.Naziv;
+                Context.Events.Remove(obrisi);
+            }
+            await Context.SaveChangesAsync();
+            return Ok($"{nazivObrisanog} je uklonjen.");
         }
         catch (Exception e)
         {
