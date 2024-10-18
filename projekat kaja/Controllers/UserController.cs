@@ -1,13 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using projekat_kaja.Models;
 
 namespace projekat_kaja.Controllers;
 
+[Authorize]
+[Route("api/[controller]")]
 [ApiController]
-[Route("[controller]")]
 public class UserController : ControllerBase
 {
-    public EMSContext Context { get; set; }
+    private EMSContext Context { get; set; }
 
     public UserController(EMSContext context)
     {

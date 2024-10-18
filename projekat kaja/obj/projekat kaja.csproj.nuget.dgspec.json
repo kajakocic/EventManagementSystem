@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj": {}
+    "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj": {
+    "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
+        "projectUniqueName": "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
         "projectName": "projekat kaja",
-        "projectPath": "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
+        "projectPath": "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
         "packagesPath": "C:\\Users\\Nignite\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\obj\\",
+        "outputPath": "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -8,7 +8,7 @@ namespace projekat_kaja.Controllers;
 [ApiController]
 public class EventController : ControllerBase
 {
-    public EMSContext Context { get; set; }
+    private EMSContext Context { get; set; }
 
     public EventController(EMSContext context)
     {

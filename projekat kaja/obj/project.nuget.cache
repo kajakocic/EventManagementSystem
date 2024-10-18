@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1+gEnveDBJBej9ivAuWGRyd2UDDhNRhY3beCPfYB43N/vPoByND3Stq89ZPfSrbheZ53nG+RGCRiwNWaW3oqPg==",
+  "dgSpecHash": "4sqovWmEXQRZe9lRtg/zbSRtKU5iprMgQL/NBfpXm5qistmHVeza+1d99NfxgZs7l+8NDeqv74h0FQypKgyecg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nignite\\Desktop\\novi git clone\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
+  "projectFilePath": "C:\\Users\\Nignite\\Desktop\\git rep EMS\\EventManagementSystem\\projekat kaja\\projekat kaja.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nignite\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Nignite\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
