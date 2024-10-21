@@ -3,49 +3,95 @@ using projekat_kaja.Models;
 
 namespace projekat_kaja.Repositories;
 
-public abstract class GenericRepository<T> : Irepository<T> where T : class
+public abstract class GenericRepository<T> : IRepository<T> where T : class
 {
     protected EMSContext Context;
 
-    protected GenericRepository(EMSContext context)
+    public GenericRepository(EMSContext context)
     {
         Context = context;
     }
-    public T Add(T entitet) 
+
+    public virtual T Add(T x)
     {
-        return Context.Add(entitet).Entity;
+        try
+        {
+            return Context.Add(x).Entity;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno dodavanje entiteta.", ex);
+        }
     }
 
-    /* public Task Delete(int id)
+    public virtual T Update(T x)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return Context.Update(x).Entity;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno ažuriranje entiteta.", ex);
+        }
     }
-    */
-    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> p)
+
+    public void Delete(Guid id)
     {
-        return Context.Set<T>()
-            .AsQueryable()
-            .Where(p)
-            .ToList();
+        try
+        {
+            var deleteX = Context.Find<T>(id);
+            Context.Remove(deleteX);
+
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno brisanje entiteta.", ex);
+        }
+    }
+
+    public virtual T Get(Guid id)
+    {
+        try
+        {
+
+            return Context.Find<T>(id);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno preuzimanje entiteta.", ex);
+        }
     }
 
     public virtual IEnumerable<T> GetAll()
     {
-        return Context.Set<T>().ToList();
+        try
+        {
+            return Context.Set<T>().ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno preuzimanje entiteta.", ex);
+        }
     }
 
-    public virtual T GetByID(int id)
+    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> x)
     {
-        return Context.Find<T>(id);  //sta ovde?
+        try
+        {
+            return Context.Set<T>()
+                        .AsQueryable()
+                        .Where(x)
+                        .ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Neispravno filtriranje entiteta.", ex);
+        }
     }
 
     public virtual void SaveChanges()
     {
         Context.SaveChanges();
-    }
-
-    public virtual T Update(T entitet)
-    {
-        return Context.Update(entitet).Entity;
     }
 }

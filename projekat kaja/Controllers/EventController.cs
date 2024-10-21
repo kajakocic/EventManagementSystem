@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using projekat_kaja.Models;
+using projekat_kaja.Repositories;
 
 namespace projekat_kaja.Controllers;
 
@@ -8,16 +8,24 @@ namespace projekat_kaja.Controllers;
 [ApiController]
 public class EventController : ControllerBase
 {
-    private EMSContext Context { get; set; }
+    private readonly IRepository<Event> eventRepository;
 
-    public EventController(EMSContext context)
+    public EventController(IRepository<Event> eventRepository)
     {
-        Context = context;
+        this.eventRepository = eventRepository;
     }
 
     //metode
+    //prikazuje dogadjaje koji su se desili u poslednja 24h ili tek treba da se dogode
+    /* public IActionResult Index()
+    {
+        var ev = eventRepository
+            .Find(e => e.Datum > DateTime.UtcNow.AddDays(-1));
+        return Ok(ev);
+    } */
+
     [HttpPost]
-    public async Task<ActionResult<Event>> AddEvent([FromBody] Event dogadjaj)
+    public IActionResult AddEvent([FromBody] Event dogadjaj)
     {
         if (!ModelState.IsValid)
         {
@@ -26,12 +34,12 @@ public class EventController : ControllerBase
 
         try
         {
-            Context.Events.Add(dogadjaj);
-            await Context.SaveChangesAsync();
+            eventRepository.Add(dogadjaj);
+            eventRepository.SaveChanges();
 
             //da li treba da se prikazuje id? ako ne sta drugo da vratim
-            //return Ok($"Dogadjaj je dodat. ID:{dogadjaj.ID}");
-            return CreatedAtAction(nameof(AddEvent), new { id = dogadjaj.ID }, dogadjaj);
+            return Ok($"Dogadjaj je dodat. ID:{dogadjaj.ID}");
+            //return CreatedAtAction(nameof(AddEvent), new { id = dogadjaj.ID }, dogadjaj);
         }
         catch (Exception e)
         {
@@ -41,11 +49,12 @@ public class EventController : ControllerBase
 
     [Route("GetEvents")]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+    public IActionResult GetEvents()
     {
         try
         {
-            return await Context.Events.ToListAsync();
+            var evs = eventRepository.GetAll();
+            return Ok(evs);
         }
         catch (Exception e)
         {
@@ -56,27 +65,19 @@ public class EventController : ControllerBase
     [Route("GetEventByID/{id}")]
     //[HttpGet("{id}")]
     [HttpGet]
-    //da li da dodajem produces responce type
-    /* [ProducesResponseType(typeof(Event), StatusCodes.Status200OK)]  
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]*/
-    public async Task<ActionResult<Event>> GetEventByID(int id)
+    public IActionResult GetEventByID(Guid id)
     {
-        if (id <= 0)
-        {
-            return BadRequest("Neispravan ID.");
-        }
         try
         {
             //dali ovde treba da filtriram reviews po oceni? akjo ne ovde gde?
-            var ev = await Context.Events.FindAsync(id);
+            var ev = eventRepository.Get(id);
 
             if (ev == null)
             {
                 return NotFound();
             }
 
-            return ev;
+            return Ok(ev);
         }
         catch (Exception e)
         {
@@ -84,7 +85,7 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("SortEvents")]
+    /*[Route("SortEvents")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Event>>> SortEvents(
             DateTime? datum = null,
@@ -96,36 +97,36 @@ public class EventController : ControllerBase
         {
             var query = Context.Events.AsQueryable();
 
-            if (datum.HasValue)
-            {
-                query = query.Where(e => e.Datum.Date == datum.Value.Date);
-            }
-            if (vreme.HasValue)
-            {
-                query = query.Where(e => e.Vreme == vreme.Value);
-            }
-            //da li su dobre kategorija i lokacija
-            if (!string.IsNullOrWhiteSpace(kategorija))
-            {
-                query = query.Where(e => e.KategorijaEvent != null
-                                      && e.KategorijaEvent.Naziv == kategorija);
-            }
-            if (!string.IsNullOrWhiteSpace(lokacija))
-            {
-                query = query.Where(e => e.LocationEvent != null
-                                      && e.LocationEvent.Naziv == lokacija);
-            }
-            //kako da implementiram sortiranje po ceni? ovde ili na frontendu
-            return await query.ToListAsync();
+             if (datum.HasValue)
+             {
+                 query = query.Where(e => e.Datum.Date == datum.Value.Date);
+             }
+             if (vreme.HasValue)
+             {
+                 query = query.Where(e => e.Vreme == vreme.Value);
+             }
+             //da li su dobre kategorija i lokacija
+             if (!string.IsNullOrWhiteSpace(kategorija))
+             {
+                 query = query.Where(e => e.KategorijaEvent != null
+                                       && e.KategorijaEvent.Naziv == kategorija);
+             }
+             if (!string.IsNullOrWhiteSpace(lokacija))
+             {
+                 query = query.Where(e => e.LocationEvent != null
+                                       && e.LocationEvent.Naziv == lokacija);
+             }
+             //kako da implementiram sortiranje po ceni? ovde ili na frontendu
+             return await query.ToListAsync(); 
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
-    }
+    }*/
 
     [HttpPut]
-    public async Task<ActionResult<Event>> IzmeniEvent([FromBody] Event ev)
+    public IActionResult IzmeniEvent([FromBody] Event ev)
     {
         if (!ModelState.IsValid)
         {
@@ -133,34 +134,25 @@ public class EventController : ControllerBase
         }
         try
         {
-            Context.Events.Update(ev);
-            await Context.SaveChangesAsync();
-            //return Ok($"Event je izmenjen. ID:{ev.ID}");
-            return CreatedAtAction(nameof(IzmeniEvent), new { id = ev.ID }, ev);
+            eventRepository.Update(ev);
+            eventRepository.SaveChanges();
+            return Ok($"Event je izmenjen. ID:{ev.ID}");
+            //return CreatedAtAction(nameof(IzmeniEvent), new { id = ev.ID }, ev);
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
+
     [HttpDelete("{id}")]
-    public async Task<ActionResult> ObrisiEvent(int id)
+    public IActionResult ObrisiEvent(Guid id)
     {
-        if (id <= 0)
-        {
-            return BadRequest("Neispravan ID.");
-        }
         try
         {
-            var obrisi = await Context.Events.FindAsync(id);
-            var nazivObrisanog = "";
-            if (obrisi != null)
-            {
-                nazivObrisanog = obrisi.Naziv;
-                Context.Events.Remove(obrisi);
-            }
-            await Context.SaveChangesAsync();
-            return Ok($"{nazivObrisanog} je uklonjen.");
+            eventRepository.Delete(id);
+            eventRepository.SaveChanges();
+            return Ok("Event je uklonjen.");
         }
         catch (Exception e)
         {

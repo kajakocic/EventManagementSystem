@@ -33,5 +33,4 @@ public class User
     //veze
     public List<Registration>? EventsUsers { get; set; }
     public List<Review>? ReviewsUser { get; set; }
-
 }

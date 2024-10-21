@@ -2,13 +2,13 @@ using System.Linq.Expressions;
 
 namespace projekat_kaja.Repositories;
 
-public interface Irepository<T> where T : class
+public interface IRepository<T> where T : class
 {
+    T Add(T x);
+    T Update(T x);
+    void Delete(Guid id);
+    T Get(Guid id);
     IEnumerable<T> GetAll();
-    T GetByID(int id);
-    T Add(T entitet);
-    T Update(T entitet);
-    //Task Delete(int id);
-    IEnumerable<T> Find(Expression<Func<T, bool>> p);
+    IEnumerable<T> Find(Expression<Func<T, bool>> x);
     void SaveChanges();
 }
