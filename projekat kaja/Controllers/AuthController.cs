@@ -1,8 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using projekat_kaja.Models;
+using projekat_kaja.Services;
 
 namespace projekat_kaja.Controllers;
 
@@ -10,32 +11,32 @@ namespace projekat_kaja.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    /* public EMSContext Context { get; set; }
-    public AuthController(EMSContext context)
+    private readonly IUserService UserService;
+    private readonly IConfiguration Config;
+
+    public AuthController(IUserService userService, IConfiguration config)
     {
-        Context = context;
-    } */
-    private IConfiguration _config;
-    public AuthController(IConfiguration config)
-    {
-        _config = config;
+        UserService = userService;
+        Config = config;
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] LoginRequest loginRequest)
+    public IActionResult Login([FromBody] User loginRequest)
     {
-        //your logic for login process
-        //If login usrename and password are correct then proceed to generate token
+        //var user = UserService.ValidateUser(loginRequest.Email, loginRequest.Password);
+       /*  if (user == null)
+            return Unauthorized("Neispravni podaci za prijavu."); */
 
-
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        var Sectoken = new JwtSecurityToken(_config["Jwt:Issuer"],
-          _config["Jwt:Issuer"],
+        var Sectoken = new JwtSecurityToken(
+          Config["Jwt:Issuer"],
+          Config["Jwt:Issuer"],
           null,
           expires: DateTime.Now.AddMinutes(120),
-          signingCredentials: credentials);
+          signingCredentials: credentials
+        );
 
         var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
 

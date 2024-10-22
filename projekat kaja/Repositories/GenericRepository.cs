@@ -14,84 +14,52 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
 
     public virtual T Add(T x)
     {
-        try
-        {
-            return Context.Add(x).Entity;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno dodavanje entiteta.", ex);
-        }
+        return Context.Add(x).Entity;
     }
 
     public virtual T Update(T x)
     {
-        try
-        {
-            return Context.Update(x).Entity;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno ažuriranje entiteta.", ex);
-        }
+        return Context.Update(x).Entity;
     }
 
     public void Delete(Guid id)
     {
-        try
-        {
-            var deleteX = Context.Find<T>(id);
-            Context.Remove(deleteX);
-
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno brisanje entiteta.", ex);
-        }
+        var deleteX = Context.Find<T>(id);
+        Context.Remove(deleteX);
     }
 
     public virtual T Get(Guid id)
     {
-        try
-        {
-
-            return Context.Find<T>(id);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno preuzimanje entiteta.", ex);
-        }
+        return Context.Find<T>(id);
     }
 
     public virtual IEnumerable<T> GetAll()
     {
-        try
-        {
-            return Context.Set<T>().ToList();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno preuzimanje entiteta.", ex);
-        }
+        return Context.Set<T>().ToList();
     }
 
     public virtual IEnumerable<T> Find(Expression<Func<T, bool>> x)
     {
-        try
-        {
-            return Context.Set<T>()
-                        .AsQueryable()
-                        .Where(x)
-                        .ToList();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Neispravno filtriranje entiteta.", ex);
-        }
+        return Context.Set<T>().AsQueryable().Where(x).ToList();
     }
 
     public virtual void SaveChanges()
     {
         Context.SaveChanges();
+    }
+
+    public void Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public T Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IQueryable<T> GetQueryable()
+    {
+        throw new NotImplementedException();
     }
 }

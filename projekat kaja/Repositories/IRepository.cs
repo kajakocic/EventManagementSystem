@@ -6,9 +6,10 @@ public interface IRepository<T> where T : class
 {
     T Add(T x);
     T Update(T x);
-    void Delete(Guid id);
-    T Get(Guid id);
+    void Delete(int id);
+    T Get(int id);
     IEnumerable<T> GetAll();
+    IQueryable<T> GetQueryable();
     IEnumerable<T> Find(Expression<Func<T, bool>> x);
     void SaveChanges();
 }

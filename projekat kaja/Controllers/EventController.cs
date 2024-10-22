@@ -1,31 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using projekat_kaja.Models;
-using projekat_kaja.Repositories;
-
+using projekat_kaja.Services;
 namespace projekat_kaja.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class EventController : ControllerBase
 {
-    private readonly IRepository<Event> eventRepository;
+    private readonly IEventService EventService;
 
-    public EventController(IRepository<Event> eventRepository)
+    public EventController(IEventService eventService)
     {
-        this.eventRepository = eventRepository;
+        EventService = eventService;
     }
 
     //metode
-    //prikazuje dogadjaje koji su se desili u poslednja 24h ili tek treba da se dogode
-    /* public IActionResult Index()
-    {
-        var ev = eventRepository
-            .Find(e => e.Datum > DateTime.UtcNow.AddDays(-1));
-        return Ok(ev);
-    } */
-
     [HttpPost]
-    public IActionResult AddEvent([FromBody] Event dogadjaj)
+    public IActionResult AddEvent([FromBody] Event ev)
     {
         if (!ModelState.IsValid)
         {
@@ -34,12 +25,8 @@ public class EventController : ControllerBase
 
         try
         {
-            eventRepository.Add(dogadjaj);
-            eventRepository.SaveChanges();
-
-            //da li treba da se prikazuje id? ako ne sta drugo da vratim
-            return Ok($"Dogadjaj je dodat. ID:{dogadjaj.ID}");
-            //return CreatedAtAction(nameof(AddEvent), new { id = dogadjaj.ID }, dogadjaj);
+            var addedEvent = EventService.AddEvent(ev);
+            return CreatedAtAction(nameof(EventService.GetEventById), new { id = addedEvent.ID }, addedEvent);
         }
         catch (Exception e)
         {
@@ -49,11 +36,15 @@ public class EventController : ControllerBase
 
     [Route("GetEvents")]
     [HttpGet]
-    public IActionResult GetEvents()
+    public IActionResult GetEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
     {
+        if (!datum.HasValue && !vreme.HasValue && string.IsNullOrWhiteSpace(kategorija) && string.IsNullOrWhiteSpace(lokacija))
+        {
+            return BadRequest("Odaberi parametar za filtriranje.");
+        }
         try
         {
-            var evs = eventRepository.GetAll();
+            var evs = EventService.FilterEvents(datum, vreme, kategorija, lokacija);
             return Ok(evs);
         }
         catch (Exception e)
@@ -62,15 +53,14 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("GetEventByID/{id}")]
+    [Route("GetEvent/{id}")]
     //[HttpGet("{id}")]
     [HttpGet]
-    public IActionResult GetEventByID(Guid id)
+    public IActionResult GetEvent(int id)
     {
         try
         {
-            //dali ovde treba da filtriram reviews po oceni? akjo ne ovde gde?
-            var ev = eventRepository.Get(id);
+            var ev = EventService.GetEventById(id);
 
             if (ev == null)
             {
@@ -85,46 +75,6 @@ public class EventController : ControllerBase
         }
     }
 
-    /*[Route("SortEvents")]
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Event>>> SortEvents(
-            DateTime? datum = null,
-            TimeSpan? vreme = null,
-            string? kategorija = null,
-            string? lokacija = null)
-    {
-        try
-        {
-            var query = Context.Events.AsQueryable();
-
-             if (datum.HasValue)
-             {
-                 query = query.Where(e => e.Datum.Date == datum.Value.Date);
-             }
-             if (vreme.HasValue)
-             {
-                 query = query.Where(e => e.Vreme == vreme.Value);
-             }
-             //da li su dobre kategorija i lokacija
-             if (!string.IsNullOrWhiteSpace(kategorija))
-             {
-                 query = query.Where(e => e.KategorijaEvent != null
-                                       && e.KategorijaEvent.Naziv == kategorija);
-             }
-             if (!string.IsNullOrWhiteSpace(lokacija))
-             {
-                 query = query.Where(e => e.LocationEvent != null
-                                       && e.LocationEvent.Naziv == lokacija);
-             }
-             //kako da implementiram sortiranje po ceni? ovde ili na frontendu
-             return await query.ToListAsync(); 
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }*/
-
     [HttpPut]
     public IActionResult IzmeniEvent([FromBody] Event ev)
     {
@@ -134,10 +84,9 @@ public class EventController : ControllerBase
         }
         try
         {
-            eventRepository.Update(ev);
-            eventRepository.SaveChanges();
-            return Ok($"Event je izmenjen. ID:{ev.ID}");
-            //return CreatedAtAction(nameof(IzmeniEvent), new { id = ev.ID }, ev);
+            var ue = EventService.UpdateEvent(ev);
+            return CreatedAtAction(nameof(EventService.GetEventById), new { id = ue.ID }, ue);
+
         }
         catch (Exception e)
         {
@@ -146,12 +95,11 @@ public class EventController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult ObrisiEvent(Guid id)
+    public IActionResult ObrisiEvent(int id)
     {
         try
         {
-            eventRepository.Delete(id);
-            eventRepository.SaveChanges();
+            EventService.DeleteEvent(id);
             return Ok("Event je uklonjen.");
         }
         catch (Exception e)
