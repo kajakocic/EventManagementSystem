@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("projekat kaja")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8e09b1697dca4fc784accd42d1b6af987c912a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65e0db5533a05dc27074077963c91ec02519d668")]
 [assembly: System.Reflection.AssemblyProductAttribute("projekat kaja")]
 [assembly: System.Reflection.AssemblyTitleAttribute("projekat kaja")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

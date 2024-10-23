@@ -22,13 +22,16 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
         return Context.Update(x).Entity;
     }
 
-    public void Delete(Guid id)
+    public void Delete(int id)
     {
-        var deleteX = Context.Find<T>(id);
-        Context.Remove(deleteX);
+        var obrisi = Context.Find<T>(id);
+        if(obrisi!= null)
+        {
+            Context.Remove(obrisi);
+        }
     }
 
-    public virtual T Get(Guid id)
+    public virtual T Get(int id)
     {
         return Context.Find<T>(id);
     }
@@ -48,18 +51,8 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
         Context.SaveChanges();
     }
 
-    public void Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public T Get(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public IQueryable<T> GetQueryable()
     {
-        throw new NotImplementedException();
+        return Context.Set<T>();
     }
 }

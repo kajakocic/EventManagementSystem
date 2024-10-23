@@ -4,7 +4,7 @@ using projekat_kaja.Models;
 
 namespace projekat_kaja.Repositories;
 
-public class EventRepository : GenericRepository<Event>, IEventRepository
+public class EventRepository : GenericRepository<Event>
 {
     public EventRepository(EMSContext context) : base(context)
     {
@@ -20,14 +20,9 @@ public class EventRepository : GenericRepository<Event>, IEventRepository
         ev.Opis = x.Opis;
         ev.CenaKarte = x.CenaKarte;
         ev.URLimg = x.URLimg;
-        if (ev.KategorijaEvent != null && x.KategorijaEvent != null)
-        {
-            ev.KategorijaEvent.ID = x.KategorijaEvent.ID;
-        }
-        if (ev.LocationEvent != null && x.LocationEvent != null)
-        {
-            ev.LocationEvent.ID = x.LocationEvent.ID;
-        }
+        ev.KategorijaEvent.ID = x.KategorijaEvent.ID;
+        ev.LocationEvent.ID = x.LocationEvent.ID;
+
 
         return base.Update(ev);
     }
@@ -42,27 +37,4 @@ public class EventRepository : GenericRepository<Event>, IEventRepository
             .ToList();
     }
 
-    public IEnumerable<Event> FilterAllEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
-    {
-        var query = Context.Events.AsQueryable();
-
-        if (datum.HasValue)
-        {
-            query = query.Where(e => e.Datum.Date == datum.Value.Date);
-        }
-        if (vreme.HasValue)
-        {
-            query = query.Where(e => e.Vreme == vreme.Value);
-        }
-        if (!string.IsNullOrWhiteSpace(kategorija))
-        {
-            query = query.Where(e => e.KategorijaEvent != null && e.KategorijaEvent.Naziv == kategorija);
-        }
-        if (!string.IsNullOrWhiteSpace(lokacija))
-        {
-            query = query.Where(e => e.LocationEvent != null && e.LocationEvent.Naziv == lokacija);
-        }
-
-        return query.ToList();
-    }
 }

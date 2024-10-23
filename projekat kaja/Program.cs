@@ -47,6 +47,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddTransient<EMSContext>();
 builder.Services.AddTransient<IRepository<Event>, EventRepository>();
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<Review>, ReviewRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

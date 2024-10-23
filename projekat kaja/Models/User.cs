@@ -33,4 +33,9 @@ public class User
     //veze
     public List<Registration>? EventsUsers { get; set; }
     public List<Review>? ReviewsUser { get; set; }
+
+    public static implicit operator User(int v)
+    {
+        throw new NotImplementedException();
+    }
 }

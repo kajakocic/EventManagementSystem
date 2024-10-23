@@ -1,45 +1,86 @@
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Identity;
 using projekat_kaja.Models;
-using projekat_kaja.Repositories;
+using projekat_kaja.UnitOfWork;
 
 namespace projekat_kaja.Services;
 
 public class UserService : IUserService
 {
-    private readonly IUserRepository UserRepository;
-    private readonly string PasswordHashKey = "key";
+    private readonly IUnitOfWOrk UnitOfWork;
+    //private readonly string PasswordHashKey = "key";
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUnitOfWOrk unitOfWork)
     {
-        UserRepository = userRepository;
+        UnitOfWork = unitOfWork;
     }
     public void DeleteUser(int id)
     {
-        UserRepository.Delete(id);
-        UserRepository.SaveChanges();
+        UnitOfWork.UserRepository.Delete(id);
+        UnitOfWork.UserRepository.SaveChanges();
+    }
+
+    public IEnumerable<User> GetAllUsers()
+    {
+        return UnitOfWork.UserRepository.GetAll();
+    }
+
+    public User GetByEmail(string email)
+    {
+        var korisnici = UnitOfWork.UserRepository.GetQueryable();
+        return korisnici.FirstOrDefault(u => u.Email == email);
     }
 
     public User GetUserById(int id)
     {
-        return UserRepository.Get(id);
+        return UnitOfWork.UserRepository.Get(id);
+    }
+
+    public bool MakeReservation(int eventId, int userId, int brmesta)
+    {
+        var korisnik = UnitOfWork.UserRepository.Get(userId);
+        if (korisnik == null)
+        {
+            throw new ApplicationException($"Korisnik ID: {userId} nije pronadjen.");
+        }
+        var dogadjaj = UnitOfWork.EventRepository.Get(eventId);
+        if (dogadjaj == null)
+        {
+            throw new ApplicationException($"Event ID: {userId} nije pronadjen.");
+        }
+        if (dogadjaj.Kapacitet < brmesta || brmesta <= 0)
+        {
+            throw new ApplicationException("Nema dovoljno raspoloživih mesta.");
+        }
+        var postojecaRezervacija = korisnik.EventsUsers.FirstOrDefault(e => e.ID == eventId);
+        if(postojecaRezervacija!=null)
+        {
+            //UPITNO
+            dogadjaj.Kapacitet-=brmesta;
+        }
+        else
+        {
+            //UPITNO
+            dogadjaj.Kapacitet-=brmesta;
+            korisnik.EventsUsers.Add(new Registration
+            {
+                UsersEvents = userId,
+                EventsUsers = eventId,
+            });
+        }
+        UnitOfWork.SaveChanges();
+        return true;
     }
 
     public User RegisterUser(User user)
     {
-        var salt = GenerateSalt();
-        //user.Password = HashPassword(user.Password, PasswordHashKey);
-
-        UserRepository.Add(user);
-        UserRepository.SaveChanges();
+        UnitOfWork.UserRepository.Add(user);
+        UnitOfWork.UserRepository.SaveChanges();
         return user;
     }
 
     public void UpdateUser(User user)
     {
-        UserRepository.Update(user);
-        UserRepository.SaveChanges();
+        UnitOfWork.UserRepository.Update(user);
+        UnitOfWork.UserRepository.SaveChanges();
     }
 
     /* public User ValidateUser(string email, string password)
@@ -51,31 +92,4 @@ public class UserService : IUserService
         }
         return null;
     } */
-    private byte[] GenerateSalt()
-    {
-        byte[] salt = new byte[16];
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            rng.GetBytes(salt);
-        }
-        return salt;
-    }
-
-    private string HashPassword(string password, byte[] salt)
-    {
-        var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: salt,
-            prf: KeyDerivationPrf.HMACSHA256,
-            iterationCount: 10000,
-            numBytesRequested: 32));
-        return hashed;
-    }
-
-    private bool VerifyPassword(string password, string storedHash, string storedSalt)
-    {
-        var saltBytes = Convert.FromBase64String(storedSalt);
-        var hashedInputPassword = HashPassword(password, saltBytes);
-        return hashedInputPassword == storedHash;
-    }
 }

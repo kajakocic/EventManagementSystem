@@ -16,6 +16,8 @@ public class Event
     [Required]
     public TimeSpan Vreme { get; set; }
     [Required]
+    public int Kapacitet { get; set; }
+    [Required]
     public string? Opis { get; set; }
     [Range(0, 100000)]
     [Required]
@@ -29,4 +31,9 @@ public class Event
     public Kategorija? KategorijaEvent { get; set; }
     public Location? LocationEvent { get; set; }
     public List<Review>? ReviewsEvent { get; set; }
+
+    public static implicit operator Event(int v)
+    {
+        throw new NotImplementedException();
+    }
 }

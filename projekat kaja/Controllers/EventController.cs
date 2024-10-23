@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using projekat_kaja.Models;
 using projekat_kaja.Services;
+
 namespace projekat_kaja.Controllers;
 
 [Route("api/[controller]")]
@@ -44,8 +45,8 @@ public class EventController : ControllerBase
         }
         try
         {
-            var evs = EventService.FilterEvents(datum, vreme, kategorija, lokacija);
-            return Ok(evs);
+            var filtriraniEv = EventService.FilterEvents(datum, vreme, kategorija, lokacija);
+            return Ok(filtriraniEv);
         }
         catch (Exception e)
         {

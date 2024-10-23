@@ -2,15 +2,10 @@ using projekat_kaja.Models;
 
 namespace projekat_kaja.Repositories;
 
-public class UserRepository : GenericRepository<User>, IUserRepository
+public class UserRepository : GenericRepository<User>
 {
     public UserRepository(EMSContext context) : base(context)
     {
-    }
-
-    public User GetByUsername(string email)
-    {
-        return Context.Users.SingleOrDefault(u => u.Email == email);
     }
 
     public override User Update(User x)

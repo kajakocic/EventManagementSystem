@@ -1,32 +1,31 @@
 using projekat_kaja.Models;
-using projekat_kaja.Repositories;
+using projekat_kaja.UnitOfWork;
 
 namespace projekat_kaja.Services;
 
 public class EventService : IEventService
 {
-    private readonly IEventRepository EventRepository;
-    public EventService(IEventRepository eventRepository)
+    private readonly IUnitOfWOrk UnitOfWork;
+    public EventService(IUnitOfWOrk unitOfWork)
     {
-        EventRepository = eventRepository;
+        UnitOfWork = unitOfWork;
     }
     public Event AddEvent(Event ev)
     {
-        EventRepository.Add(ev);
-        EventRepository.SaveChanges();
+        UnitOfWork.EventRepository.Add(ev);
+        UnitOfWork.EventRepository.SaveChanges();
         return ev;
     }
 
     public void DeleteEvent(int id)
     {
-        EventRepository.Delete(id);
-        EventRepository.SaveChanges();
+        UnitOfWork.EventRepository.Delete(id);
+        UnitOfWork.EventRepository.SaveChanges();
     }
 
     public IEnumerable<Event> FilterEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
     {
-        //ispravi ovo da logika bude u servisu
-        /* var allEvents = EventRepository.GetQueryabvle();
+        var allEvents = UnitOfWork.EventRepository.GetQueryable();
 
         if (datum.HasValue)
         {
@@ -34,34 +33,34 @@ public class EventService : IEventService
         }
         if (vreme.HasValue)
         {
-            query = query.Where(e => e.Vreme == vreme.Value);
+            allEvents = allEvents.Where(e => e.Vreme == vreme.Value);
         }
         if (!string.IsNullOrWhiteSpace(kategorija))
         {
-            query = query.Where(e => e.KategorijaEvent != null && e.KategorijaEvent.Naziv == kategorija);
+            allEvents = allEvents.Where(e => e.KategorijaEvent != null && e.KategorijaEvent.Naziv == kategorija);
         }
         if (!string.IsNullOrWhiteSpace(lokacija))
         {
-            query = query.Where(e => e.LocationEvent != null && e.LocationEvent.Naziv == lokacija);
-        } */
+            allEvents = allEvents.Where(e => e.LocationEvent != null && e.LocationEvent.Naziv == lokacija);
+        }
 
-        return EventRepository.FilterAllEvents(datum, vreme, kategorija, lokacija);
+        return allEvents;
     }
 
     public IEnumerable<Event> GetAllEvents()
     {
-        return EventRepository.GetAll();
+        return UnitOfWork.EventRepository.GetAll();
     }
 
     public Event GetEventById(int id)
     {
-        return EventRepository.Get(id);
+        return UnitOfWork.EventRepository.Get(id);
     }
 
     public Event UpdateEvent(Event ev)
     {
-        EventRepository.Update(ev);
-        EventRepository.SaveChanges();
+        UnitOfWork.EventRepository.Update(ev);
+        UnitOfWork.EventRepository.SaveChanges();
         return ev;
     }
 }
