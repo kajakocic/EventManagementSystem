@@ -7,7 +7,7 @@ public interface IUnitOfWOrk
 {
     IEventRepositoriy EventRepository { get; }
     IUserRepository UserRepository { get; }
-    IRepository<Review> ReviewRepository { get; }
+    IReviewRepository ReviewRepository { get; }
 
     void SaveChanges();
 }
@@ -46,8 +46,8 @@ public class UnitOfWork : IUnitOfWOrk
         }
     }
 
-    private IRepository<Review> reviewRepository;
-    public IRepository<Review> ReviewRepository
+    private IReviewRepository reviewRepository;
+    public IReviewRepository ReviewRepository
     {
         get
         {

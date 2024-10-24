@@ -5,6 +5,7 @@ public interface IEventService
 {
     Event AddEvent(Event ev);
     IEnumerable<Event> GetAllEvents();
+    IEnumerable<ReviewDTO> GetReviews(int eventid);
     Event GetEventById(int id);
     Event UpdateEvent(Event ev);
     void DeleteEvent(int id);

@@ -57,6 +57,23 @@ public class EventService : IEventService
         return UnitOfWork.EventRepository.Get(id);
     }
 
+    public IEnumerable<ReviewDTO> GetReviews(int eventid)
+    {
+        var recenzijeEvent = UnitOfWork.ReviewRepository.GetReviewsByEventId(eventid);
+
+        var reviewDtos = recenzijeEvent.Select(r => new ReviewDTO
+        {
+            UserReviewID = r.UserReview?.ID ?? 0, // Ako UserReview nije null, uzmi ID, inače 0
+            EventReviewID = r.EventReview.ID,
+            ImeKorisnika = r.UserReview?.Ime,
+            NazivEventa = r.EventReview.Naziv,
+            Ocena = (int)r.Ocena,
+            Komentar = r.Komentar
+        }).ToList();
+
+        return reviewDtos;
+    }
+
     public Event UpdateEvent(Event ev)
     {
         UnitOfWork.EventRepository.Update(ev);

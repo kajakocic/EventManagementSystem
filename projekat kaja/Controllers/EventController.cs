@@ -108,4 +108,18 @@ public class EventController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [Route("PrikaziReviews/{eventid}")]
+    [HttpGet]
+    public IActionResult PrikaziReviews(int eventid)
+    {
+        try
+        {
+            return Ok(EventService.GetReviews(eventid));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
