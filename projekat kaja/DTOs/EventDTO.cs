@@ -1,7 +1,6 @@
 namespace projekat_kaja.DTOs;
 public class EventDTO
 {
-    public int ID { get; set; }
     public string? Naziv { get; set; }
     public DateTime Datum { get; set; }
     public TimeSpan Vreme { get; set; }

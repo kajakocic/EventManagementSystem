@@ -10,9 +10,35 @@ public class ReviewService : IReviewService
     {
         UnitOfWork = unitOfWOrk;
     }
+
+    public Review AddReview(ReviewDTO review)
+    {
+
+        var r = new Review
+        {
+            UserReview = new User { ID = review.UserReviewID },
+            EventReview = new Event { ID = review.EventReviewID },
+            Ocena = review.Ocena,
+            Komentar = review.Komentar
+        };
+
+        UnitOfWork.ReviewRepository.Add(r);
+        UnitOfWork.SaveChanges();
+        return r;
+    }
+
+    public void DeleteReview(int userId, int eventId)
+    {
+
+        var review = GetReview(userId, eventId);
+        UnitOfWork.ReviewRepository.Delete(review.ID);
+        UnitOfWork.SaveChanges();
+    }
+
     public Review GetReview(int userId, int eventId)
     {
-        throw new NotImplementedException();
-        //return UnitOfWork.ReviewRepository.FirstOrDefault(r => r.UserReview == userId && r.EventReview == eventId);
+        return UnitOfWork.ReviewRepository
+            .Find(r => r.UserReview.ID == userId && r.EventReview.ID == eventId)
+            .FirstOrDefault();
     }
 }

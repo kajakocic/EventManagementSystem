@@ -10,6 +10,7 @@ public interface IUserService
     void UpdateUser(User user);
     void DeleteUser(int id);
     User GetByEmail(string email);
+    List<RegistrationDTO> GetUserRegistrations(int userid);
     bool MakeReservation(int eventId, int userId, int brmesta);
     //get reservation
     //bool cancel reservation

@@ -5,43 +5,62 @@ namespace projekat_kaja.Services;
 
 public class UserService : IUserService
 {
-    private readonly IUnitOfWOrk UnitOfWork;
+    private readonly IUnitOfWOrk _unitOfWork;
     //private readonly string PasswordHashKey = "key";
 
     public UserService(IUnitOfWOrk unitOfWork)
     {
-        UnitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
+
     public void DeleteUser(int id)
     {
-        UnitOfWork.UserRepository.Delete(id);
-        UnitOfWork.UserRepository.SaveChanges();
+        _unitOfWork.UserRepository.Delete(id);
+        _unitOfWork.UserRepository.SaveChanges();
     }
 
     public IEnumerable<User> GetAllUsers()
     {
-        return UnitOfWork.UserRepository.GetAll();
+        return _unitOfWork.UserRepository.GetAll();
     }
 
     public User GetByEmail(string email)
     {
-        var korisnici = UnitOfWork.UserRepository.GetQueryable();
+        var korisnici = _unitOfWork.UserRepository.GetQueryable();
         return korisnici.FirstOrDefault(u => u.Email == email);
     }
 
     public User GetUserById(int id)
     {
-        return UnitOfWork.UserRepository.Get(id);
+        return _unitOfWork.UserRepository.Get(id);
+    }
+    public List<RegistrationDTO> GetUserRegistrations(int userid)
+    {
+        var korisnik = _unitOfWork.UserRepository.GetUserWhithEvent(userid);
+        if (korisnik == null)
+        {
+            throw new ArgumentException($"Korisnik ID: {userid} nije pronadjen.");
+        }
+        var registracije = korisnik.EventsUsers
+            .Select(ue => new RegistrationDTO
+            {
+                EventId = ue.EventsUsers.ID,
+                EventName = ue.EventsUsers.Naziv,
+                EventDate = ue.EventsUsers.Datum,
+                EventLocation = ue.EventsUsers.LocationEvent.Naziv
+            }).ToList();
+
+        return registracije;
     }
 
     public bool MakeReservation(int eventId, int userId, int brmesta)
     {
-        var korisnik = UnitOfWork.UserRepository.Get(userId);
+        var korisnik = _unitOfWork.UserRepository.Get(userId);
         if (korisnik == null)
         {
             throw new ApplicationException($"Korisnik ID: {userId} nije pronadjen.");
         }
-        var dogadjaj = UnitOfWork.EventRepository.Get(eventId);
+        var dogadjaj = _unitOfWork.EventRepository.Get(eventId);
         if (dogadjaj == null)
         {
             throw new ApplicationException($"Event ID: {userId} nije pronadjen.");
@@ -51,36 +70,36 @@ public class UserService : IUserService
             throw new ApplicationException("Nema dovoljno raspoloživih mesta.");
         }
         var postojecaRezervacija = korisnik.EventsUsers.FirstOrDefault(e => e.ID == eventId);
-        if(postojecaRezervacija!=null)
+        if (postojecaRezervacija != null)
         {
             //UPITNO
-            dogadjaj.Kapacitet-=brmesta;
+            dogadjaj.Kapacitet -= brmesta;
         }
         else
         {
             //UPITNO
-            dogadjaj.Kapacitet-=brmesta;
+            dogadjaj.Kapacitet -= brmesta;
             korisnik.EventsUsers.Add(new Registration
             {
-                UsersEvents = userId,
-                EventsUsers = eventId,
+                //UsersEvents = userId,
+                //EventsUsers = eventId,
             });
         }
-        UnitOfWork.SaveChanges();
+        _unitOfWork.SaveChanges();
         return true;
     }
 
     public User RegisterUser(User user)
     {
-        UnitOfWork.UserRepository.Add(user);
-        UnitOfWork.UserRepository.SaveChanges();
+        _unitOfWork.UserRepository.Add(user);
+        _unitOfWork.UserRepository.SaveChanges();
         return user;
     }
 
     public void UpdateUser(User user)
     {
-        UnitOfWork.UserRepository.Update(user);
-        UnitOfWork.UserRepository.SaveChanges();
+        _unitOfWork.UserRepository.Update(user);
+        _unitOfWork.UserRepository.SaveChanges();
     }
 
     /* public User ValidateUser(string email, string password)

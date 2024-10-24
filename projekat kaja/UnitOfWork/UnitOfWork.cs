@@ -5,8 +5,8 @@ namespace projekat_kaja.UnitOfWork;
 
 public interface IUnitOfWOrk
 {
-    IRepository<Event> EventRepository { get; }
-    IRepository<User> UserRepository { get; }
+    IEventRepositoriy EventRepository { get; }
+    IUserRepository UserRepository { get; }
     IRepository<Review> ReviewRepository { get; }
 
     void SaveChanges();
@@ -20,8 +20,8 @@ public class UnitOfWork : IUnitOfWOrk
         Context = context;
     }
 
-    private IRepository<Event> eventRepository;
-    public IRepository<Event> EventRepository
+    private IEventRepositoriy eventRepository;
+    public IEventRepositoriy EventRepository
     {
         get
         {
@@ -33,8 +33,8 @@ public class UnitOfWork : IUnitOfWOrk
         }
     }
 
-    private IRepository<User> userRepository;
-    public IRepository<User> UserRepository
+    private IUserRepository userRepository;
+    public IUserRepository UserRepository
     {
         get
         {

@@ -4,7 +4,7 @@ using projekat_kaja.Models;
 
 namespace projekat_kaja.Repositories;
 
-public class EventRepository : GenericRepository<Event>
+public class EventRepository : GenericRepository<Event>, IEventRepositoriy
 {
     public EventRepository(EMSContext context) : base(context)
     {

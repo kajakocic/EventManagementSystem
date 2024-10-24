@@ -31,9 +31,4 @@ public class Event
     public Kategorija? KategorijaEvent { get; set; }
     public Location? LocationEvent { get; set; }
     public List<Review>? ReviewsEvent { get; set; }
-
-    public static implicit operator Event(int v)
-    {
-        throw new NotImplementedException();
-    }
 }

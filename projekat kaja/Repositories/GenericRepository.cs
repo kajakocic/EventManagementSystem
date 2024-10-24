@@ -25,7 +25,7 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
     public void Delete(int id)
     {
         var obrisi = Context.Find<T>(id);
-        if(obrisi!= null)
+        if (obrisi != null)
         {
             Context.Remove(obrisi);
         }
@@ -55,4 +55,9 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
     {
         return Context.Set<T>();
     }
+
+    /* public T Get(int id1, int id2)
+    {
+        throw new NotImplementedException();
+    } */
 }
