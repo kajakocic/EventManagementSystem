@@ -15,6 +15,6 @@ public class Review
     public string? Komentar { get; set; }
 
     //veze
-    public User? UserReview { get; set; }
-    public Event? EventReview { get; set; }
+    public User? UserEvent { get; set; }
+    public Event? EventUser { get; set; }
 }

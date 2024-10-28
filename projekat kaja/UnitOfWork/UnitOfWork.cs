@@ -8,6 +8,7 @@ public interface IUnitOfWOrk
     IEventRepositoriy EventRepository { get; }
     IUserRepository UserRepository { get; }
     IReviewRepository ReviewRepository { get; }
+    IKategorijaRepositoriy KategorijaRepositoriy { get; }
 
     void SaveChanges();
 }
@@ -56,6 +57,19 @@ public class UnitOfWork : IUnitOfWOrk
                 reviewRepository = new ReviewRepository(Context);
             }
             return reviewRepository;
+        }
+    }
+
+    private IKategorijaRepositoriy kategorijaRepository;
+    public IKategorijaRepositoriy KategorijaRepositoriy
+    {
+        get
+        {
+            if (kategorijaRepository == null)
+            {
+                kategorijaRepository = new KategorijaRepository(Context);
+            }
+            return kategorijaRepository;
         }
     }
 

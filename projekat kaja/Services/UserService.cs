@@ -44,10 +44,10 @@ public class UserService : IUserService
         var registracije = korisnik.EventsUsers
             .Select(ue => new RegistrationDTO
             {
-                EventId = ue.EventsUsers.ID,
-                EventName = ue.EventsUsers.Naziv,
-                EventDate = ue.EventsUsers.Datum,
-                EventLocation = ue.EventsUsers.LocationEvent.Naziv
+                EventId = ue.EventUser.ID,
+                EventName = ue.EventUser.Naziv,
+                EventDate = ue.EventUser.Datum,
+                EventLocation = ue.EventUser.LokacijaEvent.Naziv
             }).ToList();
 
         return registracije;

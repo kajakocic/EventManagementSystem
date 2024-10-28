@@ -8,11 +8,11 @@ namespace projekat_kaja.Controllers;
 [ApiController]
 public class EventController : ControllerBase
 {
-    private readonly IEventService EventService;
+    private readonly IEventService _eventService;
 
     public EventController(IEventService eventService)
     {
-        EventService = eventService;
+        _eventService = eventService;
     }
 
     //metode
@@ -26,8 +26,8 @@ public class EventController : ControllerBase
 
         try
         {
-            var addedEvent = EventService.AddEvent(ev);
-            return CreatedAtAction(nameof(EventService.GetEventById), new { id = addedEvent.ID }, addedEvent);
+            var addedEvent = _eventService.AddEvent(ev);
+            return CreatedAtAction(nameof(_eventService.GetEventById), new { id = addedEvent.ID }, addedEvent);
         }
         catch (Exception e)
         {
@@ -45,7 +45,7 @@ public class EventController : ControllerBase
         }
         try
         {
-            var filtriraniEv = EventService.FilterEvents(datum, vreme, kategorija, lokacija);
+            var filtriraniEv = _eventService.FilterEvents(datum, vreme, kategorija, lokacija);
             return Ok(filtriraniEv);
         }
         catch (Exception e)
@@ -61,7 +61,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            var ev = EventService.GetEventById(id);
+            var ev = _eventService.GetEventById(id);
 
             if (ev == null)
             {
@@ -85,8 +85,8 @@ public class EventController : ControllerBase
         }
         try
         {
-            var ue = EventService.UpdateEvent(ev);
-            return CreatedAtAction(nameof(EventService.GetEventById), new { id = ue.ID }, ue);
+            var ue = _eventService.UpdateEvent(ev);
+            return CreatedAtAction(nameof(_eventService.GetEventById), new { id = ue.ID }, ue);
 
         }
         catch (Exception e)
@@ -100,7 +100,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            EventService.DeleteEvent(id);
+            _eventService.DeleteEvent(id);
             return Ok("Event je uklonjen.");
         }
         catch (Exception e)
@@ -115,7 +115,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            return Ok(EventService.GetReviews(eventid));
+            return Ok(_eventService.GetReviews(eventid));
         }
         catch (Exception ex)
         {

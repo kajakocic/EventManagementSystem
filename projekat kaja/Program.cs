@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using projekat_kaja.Repositories;
+using projekat_kaja.Services;
+using projekat_kaja.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,13 +47,23 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddTransient<EMSContext>();
-builder.Services.AddTransient<IRepository<Event>, EventRepository>();
-builder.Services.AddTransient<IRepository<User>, UserRepository>();
-builder.Services.AddTransient<IRepository<Review>, ReviewRepository>();
+//builder.Services.AddTransient<EMSContext>();
+
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IEventRepositoriy, EventRepository>();
+builder.Services.AddScoped<IKategorijaRepositoriy, KategorijaRepository>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IKategorijaService, KategorijaService>();
+builder.Services.AddScoped<IUnitOfWOrk, UnitOfWork>();
 
 var app = builder.Build();
 

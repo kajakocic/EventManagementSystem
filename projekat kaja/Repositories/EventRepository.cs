@@ -12,16 +12,15 @@ public class EventRepository : GenericRepository<Event>, IEventRepositoriy
 
     public override Event Update(Event x)
     {
-        var ev = Context.Events.Single(e => e.ID == x.ID);
+        var ev = _context.Events.Single(e => e.ID == x.ID);
 
         ev.Naziv = x.Naziv;
         ev.Datum = x.Datum;
-        ev.Vreme = x.Vreme;
         ev.Opis = x.Opis;
         ev.CenaKarte = x.CenaKarte;
         ev.URLimg = x.URLimg;
         ev.KategorijaEvent.ID = x.KategorijaEvent.ID;
-        ev.LocationEvent.ID = x.LocationEvent.ID;
+        ev.LokacijaEvent.ID = x.LokacijaEvent.ID;
 
 
         return base.Update(ev);
@@ -30,11 +29,10 @@ public class EventRepository : GenericRepository<Event>, IEventRepositoriy
     //mtoda koja pretrazuje sve evente koje se jedan user prijavio
     public override IEnumerable<Event> Find(Expression<Func<Event, bool>> x)
     {
-        return Context.Events
+        return _context.Events
             .Include(r => r.UsersEvent)
-            .ThenInclude(u => u.UsersEvents)
+            .ThenInclude(u => u.UserEvent)
             .Where(x)
             .ToList();
     }
-
 }

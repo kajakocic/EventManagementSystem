@@ -16,8 +16,8 @@ public class ReviewService : IReviewService
 
         var r = new Review
         {
-            UserReview = new User { ID = review.UserReviewID },
-            EventReview = new Event { ID = review.EventReviewID },
+            UserEvent = new User { ID = review.UserReviewID },
+            EventUser = new Event { ID = review.EventReviewID },
             Ocena = review.Ocena,
             Komentar = review.Komentar
         };
@@ -38,7 +38,7 @@ public class ReviewService : IReviewService
     public Review GetReview(int userId, int eventId)
     {
         return UnitOfWork.ReviewRepository
-            .Find(r => r.UserReview.ID == userId && r.EventReview.ID == eventId)
+            .Find(r => r.UserEvent.ID == userId && r.EventUser.ID == eventId)
             .FirstOrDefault();
     }
 }

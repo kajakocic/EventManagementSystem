@@ -11,7 +11,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public override User Update(User x)
     {
-        var u = Context.Users.Single(p => p.ID == x.ID);
+        var u = _context.Users.Single(p => p.ID == x.ID);
 
         u.Ime = x.Ime;
         u.Prezime = x.Prezime;
@@ -26,9 +26,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         //vrati jednog user-a, ciji id je prosledjen kao param funkcije onoliko puta
         //na koliko se eventa registrovao
-        return Context.Users
+        return _context.Users
             .Include(u => u.EventsUsers)
-            .ThenInclude(r => r.EventsUsers)
+            .ThenInclude(r => r.EventUser)
             .FirstOrDefault(u => u.ID == userid);
     }
 }

@@ -10,12 +10,10 @@ public class Event
     [MaxLength(50)]
     [Required]
     public string? Naziv { get; set; }
-    [DataType(DataType.Date)]
     [Required]
     public DateTime Datum { get; set; }
     [Required]
-    public TimeSpan Vreme { get; set; }
-    [Required]
+    [Range(0, 100000)]
     public int Kapacitet { get; set; }
     [Required]
     public string? Opis { get; set; }
@@ -29,6 +27,6 @@ public class Event
     //veze
     public List<Registration>? UsersEvent { get; set; }
     public Kategorija? KategorijaEvent { get; set; }
-    public Location? LocationEvent { get; set; }
+    public Location? LokacijaEvent { get; set; }
     public List<Review>? ReviewsEvent { get; set; }
 }

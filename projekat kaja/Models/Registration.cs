@@ -11,7 +11,7 @@ public class Registration
 
     //veze
     [Required]
-    public User? UsersEvents { get; set; }
+    public User? UserEvent { get; set; }
     [Required]
-    public Event? EventsUsers { get; set; }
+    public Event? EventUser { get; set; }
 }

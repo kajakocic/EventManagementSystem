@@ -5,55 +5,55 @@ namespace projekat_kaja.Repositories;
 
 public abstract class GenericRepository<T> : IRepository<T> where T : class
 {
-    protected EMSContext Context;
+    protected EMSContext _context;
 
     public GenericRepository(EMSContext context)
     {
-        Context = context;
+        _context = context;
     }
 
-    public virtual T Add(T x)
+    public virtual T Add(T entity)
     {
-        return Context.Add(x).Entity;
-    }
-
-    public virtual T Update(T x)
-    {
-        return Context.Update(x).Entity;
-    }
-
-    public void Delete(int id)
-    {
-        var obrisi = Context.Find<T>(id);
-        if (obrisi != null)
-        {
-            Context.Remove(obrisi);
-        }
-    }
-
-    public virtual T Get(int id)
-    {
-        return Context.Find<T>(id);
+        return _context.Add(entity).Entity;
     }
 
     public virtual IEnumerable<T> GetAll()
     {
-        return Context.Set<T>().ToList();
+        return _context.Set<T>().ToList();
     }
 
-    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> x)
+    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
     {
-        return Context.Set<T>().AsQueryable().Where(x).ToList();
+        return _context.Set<T>().AsQueryable().Where(predicate).ToList();
+    }
+
+    public virtual T Get(int id)
+    {
+        return _context.Find<T>(id);
+    }
+
+    public virtual T Update(T x)
+    {
+        return _context.Update(x).Entity;
+    }
+
+    public void Delete(int id)
+    {
+        var obrisi = _context.Find<T>(id);
+        if (obrisi != null)
+        {
+            _context.Remove(obrisi);
+        }
     }
 
     public virtual void SaveChanges()
     {
-        Context.SaveChanges();
+        _context.SaveChanges();
     }
 
     public IQueryable<T> GetQueryable()
     {
-        return Context.Set<T>();
+        return _context.Set<T>();
     }
 
     /* public T Get(int id1, int id2)

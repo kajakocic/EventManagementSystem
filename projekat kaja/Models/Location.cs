@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projekat_kaja.Models;
 
-[Table("LOKACIJE")]
+[Table("LOKACIJA")]
 public class Location
 {
     [Key]
