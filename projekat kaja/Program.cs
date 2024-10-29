@@ -59,10 +59,12 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEventRepositoriy, EventRepository>();
 builder.Services.AddScoped<IKategorijaRepositoriy, KategorijaRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IKategorijaService, KategorijaService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUnitOfWOrk, UnitOfWork>();
 
 var app = builder.Build();

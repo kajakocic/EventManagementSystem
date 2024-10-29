@@ -15,7 +15,7 @@ public class EventController : ControllerBase
         _eventService = eventService;
     }
 
-    //metode
+    [Route("DodajEvent")]
     [HttpPost]
     public IActionResult AddEvent([FromBody] Event ev)
     {
@@ -26,8 +26,8 @@ public class EventController : ControllerBase
 
         try
         {
-            var addedEvent = _eventService.AddEvent(ev);
-            return CreatedAtAction(nameof(_eventService.GetEventById), new { id = addedEvent.ID }, addedEvent);
+            _eventService.AddEvent(ev);
+            return Ok("Event je dodat!");
         }
         catch (Exception e)
         {
@@ -35,7 +35,22 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("GetEvents")]
+    [Route("ObrisiEvent/{id}")]
+    [HttpDelete]
+    public IActionResult ObrisiEvent(int id)
+    {
+        try
+        {
+            _eventService.DeleteEvent(id);
+            return Ok($"Event ID {id} je uklonjen.");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [Route("PrikaziFiltriraneEvente")]
     [HttpGet]
     public IActionResult GetEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
     {
@@ -88,20 +103,6 @@ public class EventController : ControllerBase
             var ue = _eventService.UpdateEvent(ev);
             return CreatedAtAction(nameof(_eventService.GetEventById), new { id = ue.ID }, ue);
 
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult ObrisiEvent(int id)
-    {
-        try
-        {
-            _eventService.DeleteEvent(id);
-            return Ok("Event je uklonjen.");
         }
         catch (Exception e)
         {

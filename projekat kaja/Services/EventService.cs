@@ -12,8 +12,30 @@ public class EventService : IEventService
     }
     public Event AddEvent(Event ev)
     {
+        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.Naziv == ev.Naziv);
+
+        if (postojeciEv.Any())
+        {
+            throw new InvalidOperationException($"Event: {ev.Naziv} već postoji.");
+        }
+
+        var loc_postoji = _unitOfWork.LokacijaRepository.Find(l => l.Naziv == ev.LokacijaEvent.Naziv);
+
+        if (!loc_postoji.Any())
+        {
+            throw new InvalidOperationException("Prosledjena lokacija ne postoji.");
+        }
+
+        var kat_postoji = _unitOfWork.KategorijaRepositoriy.Find(k => k.Naziv == ev.KategorijaEvent.Naziv);
+
+        if (!kat_postoji.Any())
+        {
+            throw new InvalidOperationException("Prosledjena kategorija ne postoji.");
+        }
+
         _unitOfWork.EventRepository.Add(ev);
-        _unitOfWork.EventRepository.SaveChanges();
+        _unitOfWork.SaveChanges();
+
         return ev;
     }
 
@@ -29,8 +51,19 @@ public class EventService : IEventService
 
     public void DeleteEvent(int id)
     {
+        if (id <= 0)
+        {
+            throw new InvalidOperationException("Neispravan id.");
+        }
+
+        var ne_postoji = _unitOfWork.EventRepository.Find(x => x.ID == id);
+
+        if (!ne_postoji.Any())
+        {
+            throw new InvalidOperationException($"Event sa id: {id} ne postoji.");
+        }
         _unitOfWork.EventRepository.Delete(id);
-        _unitOfWork.EventRepository.SaveChanges();
+        _unitOfWork.SaveChanges();
     }
 
     public IEnumerable<Event> FilterEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)

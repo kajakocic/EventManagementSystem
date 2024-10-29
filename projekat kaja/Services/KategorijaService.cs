@@ -12,6 +12,11 @@ public class KategorijaService : IKategorijaService
     }
     public Kategorija AddKat(Kategorija kat)
     {
+        if (kat.Naziv == "" || kat == null)
+        {
+            throw new InvalidOperationException("Unesi kategoriju.");
+        }
+
         var postojecaKat = _unitOfWork.KategorijaRepositoriy.Find(k => k.Naziv == kat.Naziv);
 
         if (postojecaKat.Any())
@@ -29,14 +34,21 @@ public class KategorijaService : IKategorijaService
     {
         return _unitOfWork.KategorijaRepositoriy.GetAll();
     }
-
-    public Kategorija GetKatById(int id)
-    {
-        return _unitOfWork.KategorijaRepositoriy.Get(id);
-    }
     public void DeleteKat(int id)
     {
-         _unitOfWork.KategorijaRepositoriy.Delete(id);
-        _unitOfWork.KategorijaRepositoriy.SaveChanges();
+        if (id <= 0)
+        {
+            throw new InvalidOperationException("Neispravan id.");
+        }
+
+        var ne_postoji = _unitOfWork.KategorijaRepositoriy.Find(x => x.ID == id);
+
+        if (!ne_postoji.Any())
+        {
+            throw new InvalidOperationException($"Kategorija sa id: {id} ne postoji.");
+        }
+
+        _unitOfWork.KategorijaRepositoriy.Delete(id);
+        _unitOfWork.SaveChanges();
     }
 }

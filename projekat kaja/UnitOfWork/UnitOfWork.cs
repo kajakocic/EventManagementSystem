@@ -9,6 +9,7 @@ public interface IUnitOfWOrk
     IUserRepository UserRepository { get; }
     IReviewRepository ReviewRepository { get; }
     IKategorijaRepositoriy KategorijaRepositoriy { get; }
+    ILocationRepository LokacijaRepository { get; }
 
     void SaveChanges();
 }
@@ -70,6 +71,19 @@ public class UnitOfWork : IUnitOfWOrk
                 kategorijaRepository = new KategorijaRepository(Context);
             }
             return kategorijaRepository;
+        }
+    }
+
+    private ILocationRepository lokacijaRepository;
+    ILocationRepository IUnitOfWOrk.LokacijaRepository
+    {
+        get
+        {
+            if (lokacijaRepository == null)
+            {
+                lokacijaRepository = new LocationRepository(Context);
+            }
+            return lokacijaRepository;
         }
     }
 

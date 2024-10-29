@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using projekat_kaja.DTOs;
 using projekat_kaja.Models;
 using projekat_kaja.Services;
 
@@ -15,7 +16,6 @@ public class KategorijaController : ControllerBase
         _katService = katService;
     }
 
-    //metode
     [Route("DodajKategoriju")]
     [HttpPost]
     public IActionResult AddKategorija([FromBody] Kategorija kat)
@@ -27,8 +27,8 @@ public class KategorijaController : ControllerBase
 
         try
         {
-            var addedEvent = _katService.AddKat(kat);
-            return Ok("Kategorija je dodata!");
+            _katService.AddKat(kat);
+            return Ok($"Kategorija: {kat.Naziv} je dodata!");
         }
         catch (Exception e)
         {
@@ -36,18 +36,18 @@ public class KategorijaController : ControllerBase
         }
     }
 
-    [Route("PreuzmiKategorije")]
+    [Route("PrikaziSveKategorije")]
     [HttpGet]
-    public IActionResult GetAllKategorije()
+    public IActionResult GetAllKat()
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         try
         {
-            return Ok(_katService.GetAllKat().ToList());
+            return Ok(_katService.GetAllKat().Select(k =>
+            new KategorijaDTO
+            {
+                ID = k.ID,
+                Naziv = k.Naziv
+            }).ToList());
         }
         catch (Exception e)
         {
@@ -55,19 +55,19 @@ public class KategorijaController : ControllerBase
         }
     }
 
-    //nije dovrsena metoda sta ako taj id ne postoji
-    [HttpDelete("{id}")]
-    public IActionResult ObrisiEvent(int id)
+
+    [Route("ObrisiKategoriju/{id}")]
+    [HttpDelete]
+    public IActionResult DeleteKategorija(int id)
     {
         try
         {
             _katService.DeleteKat(id);
-            return Ok("Kategorija je uklonjena.");
+            return Ok($"Kategorija id: {id} je uklonjena.");
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
-
 }
