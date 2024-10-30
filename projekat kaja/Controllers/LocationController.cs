@@ -46,7 +46,7 @@ public class LocationController : ControllerBase
             new LocationDTO
             {
                 ID = l.ID,
-                Naziv = l.Naziv,
+                Lokacija = l.Naziv,
             }).ToList());
         }
         catch (Exception e)
@@ -62,10 +62,11 @@ public class LocationController : ControllerBase
         try
         {
             var l = _locService.GetLocById(id);
+            
             return Ok(new LocationDTO
             {
                 ID = l.ID,
-                Naziv = l.Naziv
+                Lokacija = l.Naziv
             });
         }
         catch (Exception e)

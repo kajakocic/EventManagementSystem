@@ -46,7 +46,7 @@ public class KategorijaController : ControllerBase
             new KategorijaDTO
             {
                 ID = k.ID,
-                Naziv = k.Naziv
+                Kategorija = k.Naziv
             }).ToList());
         }
         catch (Exception e)

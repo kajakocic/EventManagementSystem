@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using projekat_kaja.Models;
 
 namespace projekat_kaja.Repositories;
@@ -53,7 +54,7 @@ public abstract class GenericRepository<T> : IRepository<T> where T : class
 
     public IQueryable<T> GetQueryable()
     {
-        return _context.Set<T>();
+        return _context.Set<T>().AsTracking();
     }
 
     /* public T Get(int id1, int id2)

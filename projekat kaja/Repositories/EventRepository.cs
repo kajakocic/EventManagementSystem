@@ -26,13 +26,28 @@ public class EventRepository : GenericRepository<Event>, IEventRepositoriy
         return base.Update(ev);
     }
 
-    //mtoda koja pretrazuje sve evente koje se jedan user prijavio
-    public override IEnumerable<Event> Find(Expression<Func<Event, bool>> x)
+    public override Event Get(int id)
     {
-        return _context.Events
+        _context.Events
+            .Include(k => k.KategorijaEvent)
+            .Include(l => l.LokacijaEvent)
+            .FirstOrDefault(e => e.ID == id);
+
+        return base.Get(id);
+    }
+
+    //mtoda koja pretrazuje sve evente koje se jedan user prijavio
+    /* return _context.Events
             .Include(r => r.UsersEvent)
             .ThenInclude(u => u.UserEvent)
             .Where(x)
-            .ToList();
+            .ToList(); */
+    public override IEnumerable<Event> Find(Expression<Func<Event, bool>> predicate)
+    {
+        return _context.Events
+                        .Include(k => k.KategorijaEvent)
+                        .Include(l => l.LokacijaEvent)
+                        .Where(predicate)
+                        .ToList();
     }
 }

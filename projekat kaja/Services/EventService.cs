@@ -1,3 +1,4 @@
+using projekat_kaja.DTOs;
 using projekat_kaja.Models;
 using projekat_kaja.UnitOfWork;
 
@@ -10,33 +11,45 @@ public class EventService : IEventService
     {
         _unitOfWork = unitOfWork;
     }
-    public Event AddEvent(Event ev)
+    public Event AddEvent(EventDTO eventDTO)
     {
-        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.Naziv == ev.Naziv);
+        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.Naziv == eventDTO.Naziv);
 
         if (postojeciEv.Any())
         {
-            throw new InvalidOperationException($"Event: {ev.Naziv} već postoji.");
+            throw new InvalidOperationException($"Event: {eventDTO.Naziv} već postoji.");
         }
 
-        var loc_postoji = _unitOfWork.LokacijaRepository.Find(l => l.Naziv == ev.LokacijaEvent.Naziv);
+        var lokacija = _unitOfWork.LokacijaRepository.GetQueryable().FirstOrDefault(l => l.Naziv == eventDTO.Lokacija.Naziv);
 
-        if (!loc_postoji.Any())
+        if (lokacija == null)
         {
             throw new InvalidOperationException("Prosledjena lokacija ne postoji.");
         }
 
-        var kat_postoji = _unitOfWork.KategorijaRepositoriy.Find(k => k.Naziv == ev.KategorijaEvent.Naziv);
+        var kategorija = _unitOfWork.KategorijaRepositoriy.GetQueryable().FirstOrDefault(k => k.Naziv == eventDTO.Kategorija.Naziv);
 
-        if (!kat_postoji.Any())
+        if (kategorija == null)
         {
             throw new InvalidOperationException("Prosledjena kategorija ne postoji.");
         }
 
-        _unitOfWork.EventRepository.Add(ev);
+        var noviEv = new Event
+        {
+            Naziv = eventDTO.Naziv,
+            Datum = eventDTO.Datum,
+            Kapacitet = eventDTO.Kapacitet,
+            Opis = eventDTO.Opis,
+            CenaKarte = eventDTO.CenaKarte,
+            URLimg = eventDTO.URLimg,
+            KategorijaEvent = kategorija,
+            LokacijaEvent = lokacija
+        };
+
+        _unitOfWork.EventRepository.Add(noviEv);
         _unitOfWork.SaveChanges();
 
-        return ev;
+        return noviEv;
     }
 
     public IEnumerable<Event> GetAllEvents()
@@ -46,6 +59,18 @@ public class EventService : IEventService
 
     public Event GetEventById(int id)
     {
+        if (id <= 0)
+        {
+            throw new InvalidOperationException("Neispravan id.");
+        }
+
+        var ne_postoji = _unitOfWork.EventRepository.Find(x => x.ID == id);
+
+        if (!ne_postoji.Any())
+        {
+            throw new InvalidOperationException($"Event sa id: {id} ne postoji.");
+        }
+
         return _unitOfWork.EventRepository.Get(id);
     }
 
@@ -66,7 +91,7 @@ public class EventService : IEventService
         _unitOfWork.SaveChanges();
     }
 
-    public IEnumerable<Event> FilterEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
+    public IEnumerable<Event> FilterEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null)
     {
         var allEvents = _unitOfWork.EventRepository.GetQueryable();
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using projekat_kaja.DTOs;
 using projekat_kaja.Models;
 using projekat_kaja.Services;
 
@@ -17,7 +18,7 @@ public class EventController : ControllerBase
 
     [Route("DodajEvent")]
     [HttpPost]
-    public IActionResult AddEvent([FromBody] Event ev)
+    public IActionResult AddEvent([FromBody] EventDTO ev)
     {
         if (!ModelState.IsValid)
         {
@@ -35,33 +36,27 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("ObrisiEvent/{id}")]
-    [HttpDelete]
-    public IActionResult ObrisiEvent(int id)
-    {
-        try
-        {
-            _eventService.DeleteEvent(id);
-            return Ok($"Event ID {id} je uklonjen.");
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-    
     [Route("PrikaziFiltriraneEvente")]
     [HttpGet]
-    public IActionResult GetEvents(DateTime? datum = null, TimeSpan? vreme = null, string? kategorija = null, string? lokacija = null)
+    public IActionResult GetEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null)
     {
-        if (!datum.HasValue && !vreme.HasValue && string.IsNullOrWhiteSpace(kategorija) && string.IsNullOrWhiteSpace(lokacija))
+        if (!datum.HasValue && string.IsNullOrWhiteSpace(kategorija) && string.IsNullOrWhiteSpace(lokacija))
         {
             return BadRequest("Odaberi parametar za filtriranje.");
         }
         try
         {
-            var filtriraniEv = _eventService.FilterEvents(datum, vreme, kategorija, lokacija);
+            var filtriraniEv = _eventService.FilterEvents(datum, kategorija, lokacija);
             return Ok(filtriraniEv);
+            /*  return Ok(_eventService.FilterEvents(datum, kategorija, lokacija).Select(ev => new EventDTO
+             {
+                 Naziv = ev.Naziv,
+                 Datum = ev.Datum,
+                 Opis = ev.Opis,
+                 CenaKarte = ev.CenaKarte,
+                 Kategorija = ev.KategorijaEvent.Naziv,
+                 Lokacija = ev.LokacijaEvent.Naziv
+             })); */
         }
         catch (Exception e)
         {
@@ -69,8 +64,7 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("GetEvent/{id}")]
-    //[HttpGet("{id}")]
+    /* [Route("PrikaziEvent/{id}")]
     [HttpGet]
     public IActionResult GetEvent(int id)
     {
@@ -83,13 +77,21 @@ public class EventController : ControllerBase
                 return NotFound();
             }
 
-            return Ok(ev);
+            return Ok(new EventDTO
+            {
+                Naziv = ev.Naziv,
+                Datum = ev.Datum,
+                Opis = ev.Opis,
+                CenaKarte = ev.CenaKarte,
+                Kategorija = ev.KategorijaEvent.Naziv,
+                Lokacija = ev.LokacijaEvent.Naziv
+            });
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
-    }
+    } */
 
     [HttpPut]
     public IActionResult IzmeniEvent([FromBody] Event ev)
@@ -121,6 +123,21 @@ public class EventController : ControllerBase
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
+        }
+    }
+
+    [Route("ObrisiEvent/{id}")]
+    [HttpDelete]
+    public IActionResult ObrisiEvent(int id)
+    {
+        try
+        {
+            _eventService.DeleteEvent(id);
+            return Ok($"Event ID {id} je uklonjen.");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
         }
     }
 }

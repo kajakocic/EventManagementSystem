@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 namespace projekat_kaja.Models;
 
 [Table("EVENT")]
@@ -26,7 +27,9 @@ public class Event
 
     //veze
     public List<Registration>? UsersEvent { get; set; }
+    [JsonIgnore]
     public Kategorija? KategorijaEvent { get; set; }
+    [JsonIgnore]
     public Location? LokacijaEvent { get; set; }
     public List<Review>? ReviewsEvent { get; set; }
 }

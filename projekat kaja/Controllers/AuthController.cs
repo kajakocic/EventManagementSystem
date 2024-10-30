@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using projekat_kaja.DTOs;
 using projekat_kaja.Models;
 using projekat_kaja.Services;
 
@@ -23,7 +24,7 @@ public class AuthController : ControllerBase
 
     [Route("Register")]
     [HttpPost]
-    public IActionResult Register(User request)
+    public IActionResult Register(UserDto request)
     {
         var postojeciUser = UserService.GetByEmail(request.Email);
         if (postojeciUser != null)
@@ -38,7 +39,7 @@ public class AuthController : ControllerBase
                 Prezime = request.Prezime,
                 Password = request.Password,
                 Email = request.Email,
-                Tip = request.Tip
+                Tip = 0
             };
 
             var kreirani = UserService.RegisterUser(korisnik);
