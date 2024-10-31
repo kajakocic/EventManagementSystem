@@ -4,12 +4,12 @@
     <div class="row">
       <div class="col-md-2">Filtriraj po:</div>
       <div class="col-md-4">
-        <input type="text" />
+        <input type="text" [(ngModel)]="listFilter" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <h4>Filtrirano po:</h4>
+        <h4>Filtrirano po: {{ listFilter }}</h4>
       </div>
     </div>
     <div class="table-responsive">
@@ -19,21 +19,19 @@
             <th>Naziv</th>
             <th>Datum</th>
             <th>Cena ulaznice</th>
-            <th>Kategorija</th>
             <th>Lokacija</th>
+            <th>Kategorija</th>
             <th>Detalji</th>
-            <th>Komentari</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let event of events">
-            <td>{{ event.naziv }}</td>
-            <td>{{ event.datum }}</td>
-            <td>{{ event.cenaUlaznice }}</td>
-            <td>{{ event.kategorija }}</td>
-            <td>{{ event.lokacija }}</td>
-            <td>{{ event.detalji }}</td>
-            <td>{{ event.komentari }}</td>
+          <tr *ngFor="let e of filteredEvents">
+            <td>{{ e.naziv }}</td>
+            <td>{{ e.datum | date : "d. MMMM y." }}</td>
+            <td>{{ e.cenaKarte | currency : "RSD" }}</td>
+            <td>{{ e.lokacija }}</td>
+            <td>{{ e.kategorija | lowercase }}</td>
+            <td>{{ e.opis | firstSentence }}</td>
           </tr>
         </tbody>
       </table>

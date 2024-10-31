@@ -36,19 +36,33 @@ public class EventController : ControllerBase
         }
     }
 
-    [Route("PrikaziFiltriraneEvente")]
+    [Route("prikaziEvente")]
+    [HttpGet]
+    public IActionResult GetAllEvents()
+    {
+        try
+        {
+            return Ok(_eventService.GetAllEvents());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    /* [Route("PrikaziFiltriraneEvente")]
     [HttpGet]
     public IActionResult GetEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null)
     {
-        if (!datum.HasValue && string.IsNullOrWhiteSpace(kategorija) && string.IsNullOrWhiteSpace(lokacija))
-        {
-            return BadRequest("Odaberi parametar za filtriranje.");
-        }
+        // if (!datum.HasValue && string.IsNullOrWhiteSpace(kategorija) && string.IsNullOrWhiteSpace(lokacija))
+        // {
+        //     return BadRequest("Odaberi parametar za filtriranje.");
+        // }
         try
         {
             var filtriraniEv = _eventService.FilterEvents(datum, kategorija, lokacija);
             return Ok(filtriraniEv);
-            /*  return Ok(_eventService.FilterEvents(datum, kategorija, lokacija).Select(ev => new EventDTO
+             return Ok(_eventService.FilterEvents(datum, kategorija, lokacija).Select(ev => new EventDTO
              {
                  Naziv = ev.Naziv,
                  Datum = ev.Datum,
@@ -56,13 +70,13 @@ public class EventController : ControllerBase
                  CenaKarte = ev.CenaKarte,
                  Kategorija = ev.KategorijaEvent.Naziv,
                  Lokacija = ev.LokacijaEvent.Naziv
-             })); */
+             })); 
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
-    }
+    } */
 
     /* [Route("PrikaziEvent/{id}")]
     [HttpGet]

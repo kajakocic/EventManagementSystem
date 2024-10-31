@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using projekat_kaja.DTOs;
 using projekat_kaja.Models;
 using projekat_kaja.UnitOfWork;
@@ -20,14 +21,14 @@ public class EventService : IEventService
             throw new InvalidOperationException($"Event: {eventDTO.Naziv} već postoji.");
         }
 
-        var lokacija = _unitOfWork.LokacijaRepository.GetQueryable().FirstOrDefault(l => l.Naziv == eventDTO.Lokacija.Naziv);
+        var lokacija = _unitOfWork.LokacijaRepository.GetQueryable().FirstOrDefault(l => l.Naziv == eventDTO.Lokacija);
 
         if (lokacija == null)
         {
             throw new InvalidOperationException("Prosledjena lokacija ne postoji.");
         }
 
-        var kategorija = _unitOfWork.KategorijaRepositoriy.GetQueryable().FirstOrDefault(k => k.Naziv == eventDTO.Kategorija.Naziv);
+        var kategorija = _unitOfWork.KategorijaRepositoriy.GetQueryable().FirstOrDefault(k => k.Naziv == eventDTO.Kategorija);
 
         if (kategorija == null)
         {
@@ -52,9 +53,24 @@ public class EventService : IEventService
         return noviEv;
     }
 
-    public IEnumerable<Event> GetAllEvents()
+    public IEnumerable<EventDTO> GetAllEvents()
     {
-        return _unitOfWork.EventRepository.GetAll();
+        var events = _unitOfWork.EventRepository.GetQueryable()
+                           .Include(e => e.KategorijaEvent)
+                           .Include(e => e.LokacijaEvent)
+                           .ToList();
+        var eventDtos = events.Select(e => new EventDTO
+        {
+            Naziv = e.Naziv,
+            Datum = e.Datum,
+            Kapacitet = e.Kapacitet,
+            Opis = e.Opis,
+            CenaKarte = e.CenaKarte,
+            URLimg = e.URLimg,
+            Kategorija = e.KategorijaEvent.Naziv,
+            Lokacija = e.LokacijaEvent.Naziv
+        });
+        return eventDtos;
     }
 
     public Event GetEventById(int id)
@@ -108,7 +124,7 @@ public class EventService : IEventService
             allEvents = allEvents.Where(e => e.LokacijaEvent != null && e.LokacijaEvent.Naziv == lokacija);
         }
 
-        return allEvents;
+        return allEvents.ToList();
     }
 
     public IEnumerable<ReviewDTO> GetReviews(int eventid)

@@ -5,7 +5,7 @@ namespace projekat_kaja.Services;
 public interface IEventService
 {
     Event AddEvent(EventDTO eventDTO);
-    IEnumerable<Event> GetAllEvents();
+    IEnumerable<EventDTO> GetAllEvents();
     Event GetEventById(int id);
     IEnumerable<ReviewDTO> GetReviews(int eventid);
     Event UpdateEvent(Event ev);

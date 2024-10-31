@@ -9,6 +9,6 @@ public class EventDTO
     public string? Opis { get; set; }
     public double CenaKarte { get; set; }
     public string? URLimg { get; set; }
-    public Kategorija? Kategorija { get; set; }
-    public Location? Lokacija { get; set; }
+    public string? Kategorija { get; set; }
+    public string? Lokacija { get; set; }
 }
