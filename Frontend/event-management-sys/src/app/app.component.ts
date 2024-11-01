@@ -2,12 +2,20 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'pm-root',
-  template: `<div>
-    <h1>{{ title }}</h1>
-    <pm-events></pm-events>
-  </div>`,
-  styleUrl: './app.component.css',
+  template: `
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <a class="navbar-brand">{{ naslov }}</a>
+      <ul class="nav nav-pills">
+        <li><a class="nav-link" routerLink="/welcome">Početna stranica</a></li>
+        <li><a class="nav-link" routerLink ="/events">Aktuelna dešavanja</a></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Event Management System';
+  naslov = 'Event Management System';
 }

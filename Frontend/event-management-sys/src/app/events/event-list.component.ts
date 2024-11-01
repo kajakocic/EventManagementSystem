@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IEvent } from './event';
 import { EventService } from './event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'pm-events',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.css'],
 })
-export class EventListComponent implements OnInit {
+export class EventListComponent implements OnInit, OnDestroy {
   naslov: string = 'Aktuelna dešavanja';
   errorMessage: string = '';
+  sub!: Subscription;
 
   private _listFilter: string = '';
 
@@ -37,7 +38,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit(): void {
     // this.events = this.eventService.getEvents();
-    this.eventService.getEvents().subscribe(
+    this.sub = this.eventService.getEvents().subscribe(
       /* (data) => {
       this.events = data;
     } */
@@ -49,5 +50,9 @@ export class EventListComponent implements OnInit {
         error: (err) => this.errorMessage,
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

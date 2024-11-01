@@ -61,6 +61,7 @@ public class EventService : IEventService
                            .ToList();
         var eventDtos = events.Select(e => new EventDTO
         {
+            Id = e.ID,
             Naziv = e.Naziv,
             Datum = e.Datum,
             Kapacitet = e.Kapacitet,

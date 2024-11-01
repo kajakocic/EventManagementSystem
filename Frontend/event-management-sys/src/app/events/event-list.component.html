@@ -26,7 +26,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let e of filteredEvents">
-            <td>{{ e.naziv }}</td>
+            <td>
+              <a [routerLink]="['/events', e.id]">
+                {{ e.naziv }}
+              </a>
+            </td>
             <td>{{ e.datum | date : "d. MMMM y." }}</td>
             <td>{{ e.cenaKarte | currency : "RSD" }}</td>
             <td>{{ e.lokacija }}</td>

@@ -1,8 +1,7 @@
-using projekat_kaja.Models;
-
 namespace projekat_kaja.DTOs;
 public class EventDTO
 {
+    public int Id { get; set; }
     public string? Naziv { get; set; }
     public DateTime Datum { get; set; }
     public int Kapacitet { get; set; }

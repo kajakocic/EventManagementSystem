@@ -24,6 +24,8 @@ export class EventService {
     );
   }
 
+  //ovde se takodje navode post i put metode
+  
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
