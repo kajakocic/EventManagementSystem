@@ -4,5 +4,5 @@ namespace projekat_kaja.Repositories;
 
 public interface IReviewRepository : IRepository<Review>
 {
-    IEnumerable<Review> GetReviewsByEventId(int eventid);
+    //IEnumerable<Review> GetReviewsByEventId(int eventid);
 }

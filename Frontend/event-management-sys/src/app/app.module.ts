@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EventDetailComponent } from './events/event-detail.component';
 import { RouterModule } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
+//import { EventDetailGuard } from './events/event-detail.guard';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,11 @@ import { WelcomeComponent } from './home/welcome.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'events', component: EventListComponent },
-      { path: 'events/:id', component: EventDetailComponent },
+      {
+        path: 'events/:id',
+        //canActivate: [EventDetailGuard],
+        component: EventDetailComponent,
+      },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' },

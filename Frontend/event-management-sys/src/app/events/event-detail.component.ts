@@ -16,7 +16,7 @@ export class EventDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.naslov += `: ${id}`;
   }
-
+ 
   onBack(): void {
     this.router.navigate(['/events']);
   }

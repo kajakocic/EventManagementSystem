@@ -9,11 +9,11 @@ public class ReviewRepository : GenericRepository<Review>, IReviewRepository
     {
     }
 
-    public IEnumerable<Review> GetReviewsByEventId(int eventid)
+    /* public IEnumerable<Review> GetReviewsByEventId(int eventid)
     {
         return _context.Reviews
             .Include(r => r.EventUser)
             .Where(r => r.EventUser.ID == eventid)
             .ToList();
-    }
+    } */
 }

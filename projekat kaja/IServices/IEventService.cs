@@ -7,7 +7,7 @@ public interface IEventService
     Event AddEvent(EventDTO eventDTO);
     IEnumerable<EventDTO> GetAllEvents();
     Event GetEventById(int id);
-    IEnumerable<ReviewDTO> GetReviews(int eventid);
+    //IEnumerable<ReviewDTO> GetReviews(int eventid);
     Event UpdateEvent(Event ev);
     void DeleteEvent(int id);
     IEnumerable<Event> FilterEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null);

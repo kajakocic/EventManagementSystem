@@ -125,7 +125,7 @@ public class EventController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+/* 
     [Route("PrikaziReviews/{eventid}")]
     [HttpGet]
     public IActionResult PrikaziReviews(int eventid)
@@ -138,7 +138,7 @@ public class EventController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-    }
+    } */
 
     [Route("ObrisiEvent/{id}")]
     [HttpDelete]

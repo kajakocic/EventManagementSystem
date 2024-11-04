@@ -128,7 +128,7 @@ public class EventService : IEventService
         return allEvents.ToList();
     }
 
-    public IEnumerable<ReviewDTO> GetReviews(int eventid)
+    /* public IEnumerable<ReviewDTO> GetReviews(int eventid)
     {
         var recenzijeEvent = _unitOfWork.ReviewRepository.GetReviewsByEventId(eventid);
 
@@ -143,7 +143,7 @@ public class EventService : IEventService
         }).ToList();
 
         return reviewDtos;
-    }
+    } */
 
     public Event UpdateEvent(Event ev)
     {
