@@ -1,6 +1,51 @@
 <div class="card">
   <div class="card-header">
-    {{ naslov + ": " + event?.naziv }}
+    {{ naslov }}
+  </div>
+  <div class="card-body" *ngIf="event">
+    <div class="row">
+      <div class="col-md-4">
+        <img
+          class="img-fluid"
+          [style.width.px]="300"
+          [style.margin.px]="10"
+          [src]="event.urLimg"
+          [alt]="event.naziv"
+          [title]="event.naziv"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-12">
+            <h3>{{ event.naziv }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <strong>Datum:</strong> {{ event.datum | date : "shortDate" }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <strong>Kapacitet:</strong> {{ event.kapacitet }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12"><strong>Detalji:</strong> {{ event.opis }}</div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <strong>Cena Karte:</strong>
+          {{ event.cenaKarte | currency : "RSD" }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <strong>Lokacija:</strong> {{ event.lokacija }}
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <button

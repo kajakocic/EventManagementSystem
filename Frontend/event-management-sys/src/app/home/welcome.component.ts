@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: './welcome.component.html',
+  templateUrl: './welcome.component.html',
+  standalone: true,
 })
-export class WelcomeComponent
-{
-    public naslov =  "Dobrodošli!";
+export class WelcomeComponent {
+  public naslov = 'Dobrodošli!';
 }

@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'Event Management System' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Event Management System');
+    expect(app.naslov).toEqual('Event Management System');
   });
 
   it('should render title', () => {

@@ -1,0 +1,28 @@
+.btn-purple {
+    background-color: #800080; /* Ljubičasta boja */
+    border-color: #800080; /* Ljubičasta boja za ivicu */
+  }
+  
+  .btn-purple:hover {
+    background-color: #6a006a; /* Tamnija ljubičasta pri hover-u */
+    border-color: #6a006a;
+  }
+  
+  .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 10px; 
+  }
+/* Stil za navbar-brand - naslov */
+  .navbar-brand {
+    font-weight: bold;        /* Bold tekst */
+    color: #800080;           /* Ljubičasta boja */
+    font-size: 2rem;          /* Povećajte veličinu fonta */
+    font-family: 'Poppins', sans-serif; /* Primer fonta sa Google Fonts */
+  }
+  
+  /* Standardna veličina za ostale linkove u navbaru */
+  .navbar-nav .nav-link {
+    font-size: 1rem;
+  }
+  

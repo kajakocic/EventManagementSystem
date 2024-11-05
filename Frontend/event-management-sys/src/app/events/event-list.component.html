@@ -12,6 +12,21 @@
         <h4>Filtrirano po: {{ listFilter }}</h4>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-2">Filtriraj po datumu:</div>
+      <div class="col-md-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Odaberite datum</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="filterDate"
+            (dateChange)="filterEvents()"
+          />
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table" *ngIf="events.length">
         <thead>

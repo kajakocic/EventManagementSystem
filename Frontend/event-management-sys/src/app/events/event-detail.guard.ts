@@ -1,4 +1,5 @@
-/* import {
+import { Injectable } from '@angular/core';
+import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
@@ -7,6 +8,9 @@
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class EventDetailGuard implements CanActivate {
   constructor(private router: Router) {}
 
@@ -27,4 +31,3 @@ export class EventDetailGuard implements CanActivate {
     return true;
   }
 }
- */

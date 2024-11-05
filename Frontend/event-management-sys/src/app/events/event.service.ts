@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IEvent } from './event';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,14 @@ export class EventService {
     );
   }
 
+  getEvent(id: number): Observable<IEvent | undefined> {
+    return this.getEvents().pipe(
+      map((events: IEvent[]) => events.find((e) => e.id === id))
+    );
+  }
+
   //ovde se takodje navode post i put metode
-  
+
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
