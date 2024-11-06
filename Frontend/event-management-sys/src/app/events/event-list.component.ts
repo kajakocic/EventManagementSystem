@@ -3,13 +3,13 @@ import { IEvent } from './event';
 import { EventService } from './event.service';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FirstSentence } from '../shared/first-sentence.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   templateUrl: './event-list.component.html',
@@ -18,15 +18,14 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     FormsModule,
     CommonModule,
-    NgIf,
-    NgFor,
     RouterLink,
     FirstSentence,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    BrowserAnimationsModule,
   ],
+  providers: [MatDatepickerModule],
 })
 export class EventListComponent implements OnInit, OnDestroy {
   naslov: string = 'Aktuelna dešavanja';

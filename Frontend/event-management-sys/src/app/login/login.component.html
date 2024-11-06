@@ -1,0 +1,38 @@
+<div class="login-card">
+  <div class="card">
+    <div class="card-header">{{ naslov }}</div>
+    <div class="card-body">
+      <!-- Forma za prijavu -->
+      <form>
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Unesite vaš email"
+            required
+          />
+        </div>
+
+        <!-- Lozinka -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Lozinka</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Unesite vašu lozinku"
+            required
+          />
+        </div>
+
+        <!-- Dugme za prijavu -->
+        <button type="submit" class="btn btn-outline-secondary">
+          Prijavite se
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

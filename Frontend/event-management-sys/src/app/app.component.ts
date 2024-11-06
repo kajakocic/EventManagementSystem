@@ -36,6 +36,22 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
           >
         </li>
       </ul>
+      <ul class="nav nav-pills">
+        <li>
+          <a
+            class="nav-link btn btn-purple text-white font-weight-bold"
+            routerLink="/register"
+            >Registracija</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link btn-purple text-white font-weight-bold"
+            routerLink="/login"
+            >Prijava</a
+          >
+        </li>
+      </ul>
     </nav>
     <div class="container">
       <router-outlet></router-outlet>

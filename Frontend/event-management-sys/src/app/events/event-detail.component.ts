@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IEvent } from './event';
 import { EventService } from './event.service';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css'],
   standalone: true,
-  imports: [NgIf, CommonModule],
+  imports: [CommonModule],
 })
 export class EventDetailComponent implements OnInit {
   naslov: string = 'Detalji o eventu:';
