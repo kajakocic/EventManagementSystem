@@ -1,8 +1,43 @@
-.login-card {
-    max-width: 700px; 
-    margin: 20px auto; 
-
+  .login-card {
+    max-width: 70%; 
+    margin: 0 auto; 
+    
   }
+  
+  .card {
+    border-radius: 0;
+    border: 1px solid #800080;
+  }
+
+  .letters {
+    font-family: 'Cabin';
+    font-size: 24px;
+    font-weight: 500; 
+  }
+
+  .card-header
+  {
+    border-radius: 0;
+    background-color: #f5a9f8;
+  }
+
+  .fc{
+    border: 1px solid black;
+  }
+
+  .btn-custom {
+    background-color: black;  
+    color: white;             
+    border-color: black;      
+  }
+  
+  .btn-custom:hover {
+    background-color: white; 
+    color: black;            
+  }
+
+
+
   
   
   

@@ -1,59 +1,59 @@
 <div class="register-card">
   <div class="card">
-    <div class="card-header">{{ naslov }}</div>
+    <div class="card-header letters">{{ naslov }}</div>
     <div class="card-body">
       <!-- Forma za registraciju -->
-      <form>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <!-- Ime -->
         <div class="mb-3">
-          <label for="firstName" class="form-label">Ime</label>
+          <label for="firstName" class="form-label letters">Ime</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control fc"
             id="firstName"
             placeholder="Unesite vaše ime"
-            required
+            formControlName="ime"
           />
         </div>
 
         <!-- Prezime -->
         <div class="mb-3">
-          <label for="lastName" class="form-label">Prezime</label>
+          <label for="lastName" class="form-label letters">Prezime</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control fc"
             id="lastName"
             placeholder="Unesite vaše prezime"
-            required
+            formControlName="prezime"
           />
         </div>
 
         <!-- Email -->
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label letters">Email</label>
           <input
             type="email"
-            class="form-control"
+            class="form-control fc"
             id="email"
             placeholder="Unesite vaš email"
-            required
+            formControlName="email"
           />
         </div>
 
         <!-- Lozinka -->
         <div class="mb-3">
-          <label for="password" class="form-label">Lozinka</label>
+          <label for="password" class="form-label letters">Lozinka</label>
           <input
             type="password"
-            class="form-control"
+            class="form-control fc"
             id="password"
             placeholder="Unesite vašu lozinku"
-            required
+            formControlName="password"
           />
         </div>
 
         <!-- Dugme za registraciju -->
-        <button type="submit" class="btn btn-outline-secondary">
+        <button type="submit" class="btn btn-outline-secondary btn-custom">
           Registruj se
         </button>
       </form>

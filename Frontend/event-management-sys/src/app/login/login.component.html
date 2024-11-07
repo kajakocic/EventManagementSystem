@@ -3,33 +3,33 @@
     <div class="card-header">{{ naslov }}</div>
     <div class="card-body">
       <!-- Forma za prijavu -->
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Email -->
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label letters">Email</label>
           <input
             type="email"
-            class="form-control"
+            class="form-control fc"
             id="email"
             placeholder="Unesite vaš email"
-            required
+            formControlName="email"
           />
         </div>
 
         <!-- Lozinka -->
         <div class="mb-3">
-          <label for="password" class="form-label">Lozinka</label>
+          <label for="password" class="form-label letters">Lozinka</label>
           <input
             type="password"
-            class="form-control"
+            class="form-control fc"
             id="password"
             placeholder="Unesite vašu lozinku"
-            required
+            formControlName="password"
           />
         </div>
 
         <!-- Dugme za prijavu -->
-        <button type="submit" class="btn btn-outline-secondary">
+        <button type="submit" class="btn btn-outline-secondary btn-custom">
           Prijavite se
         </button>
       </form>

@@ -15,14 +15,51 @@
   }
 /* Stil za navbar-brand - naslov */
   .navbar-brand {
+    
     font-weight: bold;        /* Bold tekst */
-    color: #800080;           /* Ljubičasta boja */
-    font-size: 2rem;          /* Povećajte veličinu fonta */
-    font-family: 'Poppins', sans-serif; /* Primer fonta sa Google Fonts */
+    color: #000000;          
+    font-size: 3rem;          /* Povećajte veličinu fonta */
+    font-family: 'Cabin'; /* Primer fonta sa Google Fonts */
   }
   
-  /* Standardna veličina za ostale linkove u navbaru */
-  .navbar-nav .nav-link {
-    font-size: 1rem;
+  .navbar .nav-pills {
+    display: flex;
   }
   
+  .navbar .nav-pills.ml-auto {
+    margin-left: auto; /* Ovo omogućava da linkovi na desnoj strani budu poravnati sa desnom ivicom */
+  }
+
+  /* Sidebar styling */
+.sidebar {
+  background-color: #f5a9f8;
+  padding: 10px;
+  border-right: 2px #f5a9f8;
+  height: 100%;
+}
+
+/* Sidebar nav items styling */
+.sidebar .nav-link {
+  margin-bottom: 15px; /* Razmak između stavki */
+}
+
+/* Podesi razmak između navbara i sadržaja */
+.container-fluid {
+  padding-top: 15px;
+}
+
+/* Osiguraj da main content ima odgovarajući razmak sa leve strane */
+.row {
+  height: calc(100vh - 96px);
+  margin-top: 20px; 
+}
+.col-md-9 {
+  padding-left:0; /* Ukloni padding sa leve strane */
+}
+
+/* Veća specifičnost za navbar */
+.navbar.navbar-light {
+  background-color: #f5a9f8 !important; /* Dodaj !important da prepišeš sve prethodne stilove */
+}
+
+
