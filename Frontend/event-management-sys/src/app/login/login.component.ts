@@ -5,6 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,11 +14,11 @@ import {
   imports: [ReactiveFormsModule],
 })
 export class LoginComponent {
-  public naslov = 'Prijavi se';
+  public naslov = 'Prijava';
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,6 +28,16 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
+
+      this.authService.login(this.loginForm.value).subscribe(
+        (response) => {
+          console.log('Prijavljeni ste:', response);
+          this.authService.saveToken(response.token);
+        },
+        (error) => {
+          console.error('Greška pri prijavi:', error);
+        }
+      );
     } else {
       console.log('Forma nije validna');
     }

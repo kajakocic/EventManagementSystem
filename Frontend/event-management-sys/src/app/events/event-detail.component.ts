@@ -37,4 +37,8 @@ export class EventDetailComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['/events']);
   }
+
+  delete(): void{
+    
+  }
 }

@@ -43,6 +43,12 @@
   margin-bottom: 15px; /* Razmak između stavki */
 }
 
+.navbar .nav-link {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  display: flex;
+}
+
 /* Podesi razmak između navbara i sadržaja */
 .container-fluid {
   padding-top: 15px;
@@ -61,5 +67,13 @@
 .navbar.navbar-light {
   background-color: #f5a9f8 !important; /* Dodaj !important da prepišeš sve prethodne stilove */
 }
+
+.letters {
+  font-family: 'Cabin';
+  font-size: 19px;
+  font-weight: 300;
+  color: white; 
+}
+
 
 

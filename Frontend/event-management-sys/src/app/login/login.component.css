@@ -27,7 +27,8 @@
 
   .btn-custom {
     background-color: black;  
-    color: white;             
+    color: white;   
+    font-size: 22px;         
     border-color: black;      
   }
   

@@ -1,5 +1,69 @@
-  th {
-    color: blueviolet;
+  .card {
+    max-width: 100%; 
+    margin: 0 auto;
+    margin-top: 10px; 
+    border-radius: 0;
+    border: 1px solid #800080;
+  }
+
+  .letters {
+    font-family: 'Cabin';
+    font-size: 24px;
+    font-weight: 500; 
+  }
+  .letters-text {
+    font-family: 'Cabin';
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .letters-th
+  {
+    font-family: 'Cabin';
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .card-header
+  {
+    border-radius: 0;
+    background-color: #f5a9f8;
   }
   
+  .btn-custom {
+    background-color: black; 
+    color: white;
+    font-size: 22px;             
+    border-color: black;     
+  }
   
+  .btn-custom:hover {
+    background-color: white; 
+    color: black;            
+  }
+
+  .filter{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
+  }
+
+  .fc{
+    border: 1px solid black;
+    height: 35%;
+  }
+
+  .btn-purple {
+    display: flex;
+    background-color: #800080; /* Ljubičasta boja */
+    border-color: #800080; /* Ljubičasta boja za ivicu */
+    justify-content:center;
+  }
+  
+  .btn-purple:hover {
+    background-color: #6a006a; /* Tamnija ljubičasta pri hover-u */
+    border-color: #6a006a;
+  }
+}
+

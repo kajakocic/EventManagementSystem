@@ -1,6 +1,6 @@
 <div class="login-card">
   <div class="card">
-    <div class="card-header">{{ naslov }}</div>
+    <div class="card-header letters">{{ naslov }}</div>
     <div class="card-body">
       <!-- Forma za prijavu -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -29,8 +29,11 @@
         </div>
 
         <!-- Dugme za prijavu -->
-        <button type="submit" class="btn btn-outline-secondary btn-custom">
-          Prijavite se
+        <button
+          type="submit"
+          class="btn btn-outline-secondary btn-custom letters"
+        >
+          Prijavi se
         </button>
       </form>
     </div>

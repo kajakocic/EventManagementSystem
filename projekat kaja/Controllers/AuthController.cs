@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
                 Prezime = request.Prezime,
                 Password = request.Password,
                 Email = request.Email,
-                Tip = 0
+                Tip = (TipKorisnika)1
             };
 
             var kreirani = UserService.RegisterUser(korisnik);
@@ -51,6 +51,7 @@ public class AuthController : ControllerBase
         }
     }
 
+    [Route("Login")]
     [HttpPost]
     public IActionResult Login(LoginRequest loginRequest)
     {

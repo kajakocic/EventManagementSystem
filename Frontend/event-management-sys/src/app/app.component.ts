@@ -1,5 +1,7 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @Component({
   selector: 'pm-root',
@@ -19,16 +21,12 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
         <ul class="nav nav-pills ml-auto">
           <li>
-            <a
-              class="nav-link btn btn-purple text-white"
-              routerLink="/register"
+            <a class="nav-link btn btn-purple letters" routerLink="/register"
               >Registracija</a
             >
           </li>
           <li>
-            <a
-              class="nav-link btn btn-purple text-white"
-              routerLink="/login"
+            <a class="nav-link btn btn-purple letters" routerLink="/login"
               >Prijava</a
             >
           </li>
@@ -41,23 +39,17 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
           <div class="sidebar">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a
-                  class="nav-link btn btn-purple text-white"
-                  routerLink="/welcome"
+                <a class="nav-link btn btn-purple letters" routerLink="/welcome"
                   >Dobrodošli</a
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link btn btn-purple text-white"
-                  routerLink="/about"
+                <a class="nav-link btn btn-purple letters" routerLink="/about"
                   >O nama</a
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link btn btn-purple text-white"
-                  routerLink="/events"
+                <a class="nav-link btn btn-purple letters" routerLink="/events"
                   >Aktuelna dešavanja</a
                 >
               </li>
@@ -75,6 +67,14 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.css'],
   standalone: true,
   imports: [RouterLinkActive, RouterLink, RouterOutlet],
+  providers: [
+    // Provide the HTTP Interceptor locally for this standalone component
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AppComponent {
   naslov = '#EMS';

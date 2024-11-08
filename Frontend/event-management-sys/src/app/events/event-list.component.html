@@ -1,27 +1,27 @@
-<div class="card">
-  <div class="card-header">{{ naslov }}</div>
+<div class="col-md-12 card">
+  <div class="card-header letters">{{ naslov }}</div>
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-2">Filtriraj po nazivu:</div>
-      <div class="col-md-4">
-        <input type="text" [(ngModel)]="listFilter" />
+
+    <!--Filter start-->
+    <div class="row filter">
+      <!-- Filter po nazivu -->
+      <div class="col-md-3">
+        <label for="listFilter" class="mb-2 mt-2 btn btn-purple letters-th">Pretraga po nazivu:</label>
+        <input type="text" [(ngModel)]="listFilter" class="form-control fc" />
       </div>
-    </div>
-    <!-- Razmak između filtera po nazivu i filtera po datumu -->
-    <div class="row">
-      <div class="col-md-12">&nbsp;</div>
-      <!-- Dodaje prazni prostor između redova -->
-    </div>
-    <div class="row">
-      <div class="col-md-2">Filtriraj po datumu:</div>
-      <div class="col-md-4">
-        <mat-form-field appearance="fill">
+
+      <!-- Filter po datumu -->
+      <div class="col-md-3">
+        <label for="filterDate" class="mb-2 mt-2 btn btn-purple letters-th">Pretraga po datumu:</label>
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label>Odaberite datum</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
             [(ngModel)]="filterDate"
             (dateChange)="filterEvents()"
+            id="filterDate"
+            class="form-control"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -31,16 +31,19 @@
         </mat-form-field>
       </div>
     </div>
+    <!--Filter end-->
+
+    <!-- Table start -->
     <div class="table-responsive">
       <table class="table" *ngIf="events.length">
         <thead>
           <tr>
-            <th>Naziv</th>
-            <th>Datum</th>
-            <th>Cena ulaznice</th>
-            <th>Lokacija</th>
-            <th>Kategorija</th>
-            <th>Detalji</th>
+            <th><div class="btn btn-purple letters-th">Naziv</div></th>
+            <th><div class="btn btn-purple letters-th">Datum</div></th>
+            <th><div class="btn btn-purple letters-th">Ulaznica</div></th>
+            <th><div class="btn btn-purple letters-th">Lokacija</div></th>
+            <th><div class="btn btn-purple letters-th">Kategorija</div></th>
+            <th><div class="btn btn-purple letters-th">Detalji</div></th>
           </tr>
         </thead>
         <tbody>
@@ -50,14 +53,16 @@
                 {{ e.naziv }}
               </a>
             </td>
-            <td>{{ e.datum | date : "d. MMMM y." }}</td>
-            <td>{{ e.cenaKarte | currency : "RSD" }}</td>
-            <td>{{ e.lokacija }}</td>
-            <td>{{ e.kategorija | lowercase }}</td>
-            <td>{{ e.opis | firstSentence }}</td>
+            <td><div class="letters-text">{{ e.datum | date : "d. MMMM y." }}</div></td>
+            <td><div class="letters-text">{{ e.cenaKarte | currency : "RSD" }}</div></td>
+            <td><div class="letters-text">{{ e.lokacija }}</div></td>
+            <td><div class="letters-text">{{ e.kategorija | lowercase }}</div></td>
+            <td><div class="letters-text">{{ e.opis | firstSentence }}</div></td>
           </tr>
         </tbody>
       </table>
     </div>
+    <!-- Table end -->
+
   </div>
 </div>
