@@ -107,8 +107,9 @@ public class EventController : ControllerBase
         }
     } */
 
+    [Route("izmeniEvent")]
     [HttpPut]
-    public IActionResult IzmeniEvent([FromBody] Event ev)
+    public IActionResult IzmeniEvent([FromBody] EventDTO ev)
     {
         if (!ModelState.IsValid)
         {
@@ -117,7 +118,7 @@ public class EventController : ControllerBase
         try
         {
             var ue = _eventService.UpdateEvent(ev);
-            return CreatedAtAction(nameof(_eventService.GetEventById), new { id = ue.ID }, ue);
+            return Ok("Event je izmenjem!");
 
         }
         catch (Exception e)
@@ -125,20 +126,20 @@ public class EventController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-/* 
-    [Route("PrikaziReviews/{eventid}")]
-    [HttpGet]
-    public IActionResult PrikaziReviews(int eventid)
-    {
-        try
+    /* 
+        [Route("PrikaziReviews/{eventid}")]
+        [HttpGet]
+        public IActionResult PrikaziReviews(int eventid)
         {
-            return Ok(_eventService.GetReviews(eventid));
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    } */
+            try
+            {
+                return Ok(_eventService.GetReviews(eventid));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } */
 
     [Route("ObrisiEvent/{id}")]
     [HttpDelete]

@@ -38,7 +38,9 @@ export class EventDetailComponent implements OnInit {
     this.router.navigate(['/events']);
   }
 
-  delete(): void{
-    
+  onEdit(): void {
+    if (this.event) {
+      this.router.navigate(['/edit-event', this.event.id]);
+    }
   }
 }

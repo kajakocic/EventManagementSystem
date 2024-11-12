@@ -1,18 +1,21 @@
 <div class="col-md-12 card">
   <div class="card-header letters">{{ naslov }}</div>
   <div class="card-body">
-
     <!--Filter start-->
     <div class="row filter">
       <!-- Filter po nazivu -->
       <div class="col-md-3">
-        <label for="listFilter" class="mb-2 mt-2 btn btn-purple letters-th">Pretraga po nazivu:</label>
+        <label for="listFilter" class="mb-2 mt-2 btn btn-purple letters-th"
+          >Pretraga po nazivu:</label
+        >
         <input type="text" [(ngModel)]="listFilter" class="form-control fc" />
       </div>
 
       <!-- Filter po datumu -->
       <div class="col-md-3">
-        <label for="filterDate" class="mb-2 mt-2 btn btn-purple letters-th">Pretraga po datumu:</label>
+        <label for="filterDate" class="mb-2 mt-2 btn btn-purple letters-th"
+          >Pretraga po datumu:</label
+        >
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>Odaberite datum</mat-label>
           <input
@@ -53,16 +56,39 @@
                 {{ e.naziv }}
               </a>
             </td>
-            <td><div class="letters-text">{{ e.datum | date : "d. MMMM y." }}</div></td>
-            <td><div class="letters-text">{{ e.cenaKarte | currency : "RSD" }}</div></td>
-            <td><div class="letters-text">{{ e.lokacija }}</div></td>
-            <td><div class="letters-text">{{ e.kategorija | lowercase }}</div></td>
-            <td><div class="letters-text">{{ e.opis | firstSentence }}</div></td>
+            <td>
+              <div class="letters-text">
+                {{ e.datum | date : "d. MMMM y." }}
+              </div>
+            </td>
+            <td>
+              <div class="letters-text">
+                {{ e.cenaKarte | currency : "RSD" }}
+              </div>
+            </td>
+            <td>
+              <div class="letters-text">{{ e.lokacija }}</div>
+            </td>
+            <td>
+              <div class="letters-text">{{ e.kategorija | lowercase }}</div>
+            </td>
+            <td>
+              <div class="letters-text">{{ e.opis | firstSentence }}</div>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- Table end -->
 
+    <!--Footer start-->
+    <div class="card-footer">
+      <div class="add-button">
+        <button class="btn btn-outline-secondary btn-custom letters">
+          <i class="fa fa-plus"> Dodaj</i>
+        </button>
+      </div>
+    </div>
+    <!--Footer start-->
   </div>
 </div>

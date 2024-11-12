@@ -8,7 +8,7 @@ public interface IEventService
     IEnumerable<EventDTO> GetAllEvents();
     Event GetEventById(int id);
     //IEnumerable<ReviewDTO> GetReviews(int eventid);
-    Event UpdateEvent(Event ev);
+    Event UpdateEvent(EventDTO eventDTO);
     void DeleteEvent(int id);
     IEnumerable<Event> FilterEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null);
 }

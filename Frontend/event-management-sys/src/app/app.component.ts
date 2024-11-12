@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'pm-root',
@@ -28,6 +29,11 @@ import { AuthInterceptor } from './auth/auth.interceptor';
           <li>
             <a class="nav-link btn btn-purple letters" routerLink="/login"
               >Prijava</a
+            >
+          </li>
+          <li>
+            <a class="nav-link btn btn-purple letters" (click)="logout()"
+              >Odjavi se</a
             >
           </li>
         </ul>
@@ -78,4 +84,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 })
 export class AppComponent {
   naslov = '#EMS';
+
+  constructor(public authService: AuthService) {}
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

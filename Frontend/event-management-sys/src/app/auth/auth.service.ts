@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { IUser } from './user';
 import { Observable } from 'rxjs';
-import { ILoginResponse } from './loginResponse';
+import { LoggedUser } from './logged-user';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ export class AuthService {
   login(credentials: {
     email: string;
     password: string;
-  }): Observable<ILoginResponse> {
-    return this.http.post<ILoginResponse>(`${this.authUrl}/Login`, credentials);
+  }): Observable<LoggedUser> {
+    return this.http.post<LoggedUser>(`${this.authUrl}/Login`, credentials);
   }
 
   decodeToken(token: string) {
@@ -30,16 +30,16 @@ export class AuthService {
     return JSON.parse(atob(payload));
   }
 
-  saveToken(token: string): void {
-    localStorage.setItem('authToken', token);
+  saveToken(token: LoggedUser): void {
+    localStorage.setItem('user', JSON.stringify(token));
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
+  getToken(): LoggedUser | null {
+    return JSON.parse(localStorage.getItem('user') ?? '');
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 
@@ -47,7 +47,7 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return false;
 
-    const decodeToken = this.decodeToken(token);
+    const decodeToken = this.decodeToken(token.Token);
 
     const expiry = decodeToken(token);
     const now = Math.floor(new Date().getTime() / 1000);

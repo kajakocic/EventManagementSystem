@@ -88,7 +88,17 @@ public class AuthController : ControllerBase
 
             var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
 
-            return Ok(token);
+            var response = new UserLoginDto()
+            {
+                ID = korisnik.ID,
+                Ime = korisnik.Ime,
+                Prezime = korisnik.Prezime,
+                Tip = korisnik.Tip,
+                Email = korisnik.Email,
+                Token = token
+            };
+
+            return Ok(response);
         }
         catch (Exception ex)
         {

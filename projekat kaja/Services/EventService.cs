@@ -53,6 +53,56 @@ public class EventService : IEventService
         return noviEv;
     }
 
+    public Event UpdateEvent(EventDTO eventDTO)
+    {
+        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.ID == eventDTO.Id).FirstOrDefault();
+
+        if (postojeciEv == null)
+        {
+            throw new InvalidCastException("Event koji trežite ne postoji.");
+        }
+
+        var naziv = postojeciEv.Naziv;
+        var opis = postojeciEv.Opis;
+        var imgUrl = postojeciEv.URLimg;
+        var kateg = postojeciEv.KategorijaEvent.Naziv;
+        var lokac = postojeciEv.LokacijaEvent.Naziv;
+
+
+        if (eventDTO.Naziv == "")
+            postojeciEv.Naziv = naziv;
+        else
+            postojeciEv.Naziv = eventDTO.Naziv;
+        postojeciEv.Datum = eventDTO.Datum;
+        postojeciEv.Kapacitet = eventDTO.Kapacitet;
+
+        if (eventDTO.Opis == "")
+            postojeciEv.Opis = opis;
+        else
+            postojeciEv.Opis = eventDTO.Opis;
+
+        postojeciEv.CenaKarte = eventDTO.CenaKarte;
+
+        if (eventDTO.URLimg == "")
+            postojeciEv.URLimg = imgUrl;
+        else
+            postojeciEv.URLimg = eventDTO.URLimg;
+
+        if (eventDTO.Lokacija == "")
+            postojeciEv.LokacijaEvent.Naziv = lokac;
+        else
+            postojeciEv.LokacijaEvent.Naziv = eventDTO.Lokacija;
+        if (eventDTO.Kategorija == "")
+            postojeciEv.KategorijaEvent.Naziv = kateg;
+        else
+            postojeciEv.KategorijaEvent.Naziv = eventDTO.Kategorija;
+
+            
+        _unitOfWork.EventRepository.Update(postojeciEv);
+        _unitOfWork.EventRepository.SaveChanges();
+        return postojeciEv;
+    }
+
     public IEnumerable<EventDTO> GetAllEvents()
     {
         var events = _unitOfWork.EventRepository.GetQueryable()
@@ -144,11 +194,4 @@ public class EventService : IEventService
 
         return reviewDtos;
     } */
-
-    public Event UpdateEvent(Event ev)
-    {
-        _unitOfWork.EventRepository.Update(ev);
-        _unitOfWork.EventRepository.SaveChanges();
-        return ev;
-    }
 }
