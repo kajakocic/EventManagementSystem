@@ -15,6 +15,11 @@ export const routes: Routes = [
       import('./about/about.component').then((c) => c.AboutComponent),
   },
   {
+    path: 'addEvent',
+    loadComponent: () =>
+      import('./addEvent/add-event.component').then((c) => c.AddEventComponent),
+  },
+  {
     path: 'register',
     loadComponent: () =>
       import('./register/register.component').then((c) => c.RegisterComponent),
@@ -23,6 +28,13 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./login/login.component').then((c) => c.LoginComponent),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/user-profile.component').then(
+        (c) => c.UserProfileComponent
+      ),
   },
   { path: '**', redirectTo: 'welcome', pathMatch: 'full' },
 ];

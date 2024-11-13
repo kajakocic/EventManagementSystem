@@ -1,29 +1,22 @@
-<div class="card">
+<div class="card" *ngIf="event">
   <div class="card-header">
-    {{ naslov }}
+    {{ event.naziv }}
   </div>
-  <div class="card-body" *ngIf="event">
+  <div class="card-body">
     <div class="row">
-      <div class="col-md-4">
+      <div class="slika">
         <img
-          class="img-fluid"
-          [style.width.px]="300"
+          class="img-fluid custom-img"
+          [style.width.px]="500"
           [style.margin.px]="10"
           [src]="event.urLimg"
           [alt]="event.naziv"
           [title]="event.naziv"
         />
       </div>
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col-12">
-            <h3>{{ event.naziv }}</h3>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <div class="col-12">
-          <strong>Datum:</strong> {{ event.datum | date : "shortDate" }}
+          <strong>Ovaj dogadjaj održaće se</strong> {{ event.datum | date : "shortDate" }}
         </div>
       </div>
       <div class="row">

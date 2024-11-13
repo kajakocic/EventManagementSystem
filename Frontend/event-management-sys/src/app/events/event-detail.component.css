@@ -31,4 +31,15 @@
     margin-right: auto; 
   }
   
-  
+  .card-header, .card-footer
+  {
+    border-radius: 0;
+    background-color: #fee7ff;
+  }
+  .custom-img {
+    border: 5px solid #800080; /* Roze okvir */
+  }
+  .slika {
+    display: flex;
+    justify-content: center;
+  }

@@ -8,8 +8,8 @@
 
   .letters {
     font-family: 'Cabin';
-    font-size: 24px;
-    font-weight: 500; 
+    font-size: 28px;
+    font-weight: 600; 
   }
   .letters-text {
     font-family: 'Cabin';
@@ -25,10 +25,10 @@
     color: white;
   }
 
-  .card-header
+  .card-header, .card-footer
   {
     border-radius: 0;
-    background-color: #f5a9f8;
+    background-color: #fee7ff;
   }
   
   .btn-custom {
@@ -85,5 +85,12 @@
   
   .card-footer .add-button {
     margin-left: auto; 
+  }
+
+  .letters-add {
+    font-family: 'Cabin';
+    font-size: 22px;
+    font-weight: 300;
+    color: white; 
   }
 

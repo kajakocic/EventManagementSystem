@@ -14,6 +14,10 @@
             placeholder="Unesite vaše ime"
             formControlName="ime"
           />
+          @if(registerForm.get('ime')?.invalid &&
+          registerForm.get('ime')?.touched) {
+          <div class="text-danger">Ime je obavezno.</div>
+          }
         </div>
 
         <!-- Prezime -->
@@ -26,6 +30,10 @@
             placeholder="Unesite vaše prezime"
             formControlName="prezime"
           />
+          @if(registerForm.get('prezime')?.invalid &&
+          registerForm.get('prezime')?.touched) {
+          <div class="text-danger">Prezime je obavezno.</div>
+          }
         </div>
 
         <!-- Email -->
@@ -38,6 +46,10 @@
             placeholder="Unesite vaš email"
             formControlName="email"
           />
+          @if(registerForm.get('email')?.invalid &&
+          registerForm.get('email')?.touched) {
+          <div class="text-danger">Email je obavezan.</div>
+          }
         </div>
 
         <!-- Lozinka -->
@@ -50,10 +62,17 @@
             placeholder="Unesite vašu lozinku"
             formControlName="password"
           />
+          @if(registerForm.get('password')?.invalid &&
+          registerForm.get('password')?.touched) {
+          <div class="text-danger">Lozinka je obavezna.</div>
+          }
         </div>
 
         <!-- Dugme za registraciju -->
-        <button type="submit" class="btn btn-outline-secondary btn-custom letters">
+        <button
+          type="submit"
+          class="btn btn-outline-secondary btn-custom letters"
+        >
           Registruj se
         </button>
       </form>

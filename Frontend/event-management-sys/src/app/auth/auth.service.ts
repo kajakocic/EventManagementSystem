@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { IUser } from './user';
 import { Observable } from 'rxjs';
-import { LoggedUser } from './logged-user';
+import { LoggedUser, TipKorisnika } from './logged-user';
 
 @Injectable({
   providedIn: 'root',
@@ -30,12 +30,17 @@ export class AuthService {
     return JSON.parse(atob(payload));
   }
 
-  saveToken(token: LoggedUser): void {
+  saveUser(token: LoggedUser): void {
     localStorage.setItem('user', JSON.stringify(token));
   }
 
-  getToken(): LoggedUser | null {
-    return JSON.parse(localStorage.getItem('user') ?? '');
+  getUser(): LoggedUser | null {
+    const loggedUser = localStorage.getItem('user');
+    if (!loggedUser) {
+      return null;
+    }
+
+    return JSON.parse(loggedUser);
   }
 
   logout(): void {
@@ -44,13 +49,21 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.getToken();
-    if (!token) return false;
+    const user = this.getUser();
+    if (!user) return false;
 
-    const decodeToken = this.decodeToken(token.Token);
+    return true;
+    // const decodeToken = this.decodeToken(user.token);
 
-    const expiry = decodeToken(token);
-    const now = Math.floor(new Date().getTime() / 1000);
-    return now < expiry;
+    // const expiry = decodeToken(user);
+    // const now = Math.floor(new Date().getTime() / 1000);
+    // return now < expiry;
+  }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    if (!user) return false;
+
+    return user.tip === TipKorisnika.Admin;
   }
 }

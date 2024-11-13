@@ -1,10 +1,10 @@
 export interface LoggedUser {
-  ID: number;
-  Ime: string;
-  Prezime: string;
-  Email: string;
-  Tip: TipKorisnika;
-  Token: string;
+  id: number;
+  ime: string;
+  prezime: string;
+  email: string;
+  tip: TipKorisnika;
+  token: string;
 }
 
 export enum TipKorisnika {

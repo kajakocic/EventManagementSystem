@@ -21,21 +21,25 @@ import { AuthService } from './auth/auth.service';
         <a class="navbar-brand">{{ naslov }}</a>
 
         <ul class="nav nav-pills ml-auto">
+          @if(!authService.isAuthenticated()) {
           <li>
             <a class="nav-link btn btn-purple letters" routerLink="/register"
               >Registracija</a
             >
           </li>
+          } @if(!authService.isAuthenticated()) {
           <li>
             <a class="nav-link btn btn-purple letters" routerLink="/login"
               >Prijava</a
             >
           </li>
+          } @if(authService.isAuthenticated()) {
           <li>
             <a class="nav-link btn btn-purple letters" (click)="logout()"
               >Odjavi se</a
             >
           </li>
+          }
         </ul>
       </nav>
 
@@ -59,6 +63,13 @@ import { AuthService } from './auth/auth.service';
                   >Aktuelna dešavanja</a
                 >
               </li>
+              @if(authService.isAuthenticated()) {
+              <li class="nav-item">
+                <a class="nav-link btn btn-purple letters" routerLink="/profile"
+                  >Moj profil</a
+                >
+              </li>
+              }
             </ul>
           </div>
         </div>

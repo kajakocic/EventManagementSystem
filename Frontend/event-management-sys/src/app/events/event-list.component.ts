@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   templateUrl: './event-list.component.html',
@@ -28,7 +29,7 @@ import { MatNativeDateModule } from '@angular/material/core';
   providers: [MatDatepickerModule],
 })
 export class EventListComponent implements OnInit, OnDestroy {
-  naslov: string = 'Aktuelna dešavanja';
+  naslov: string = '';
   errorMessage: string = '';
   sub!: Subscription;
 
@@ -44,21 +45,15 @@ export class EventListComponent implements OnInit, OnDestroy {
     this._listFilter = value;
     console.log('in setter:', value);
     this.filterEvents();
-    /* let filteredByName = this.filtriraj(value);
-
-    if (this.filterDate) {
-      this.filteredEvents = this.filtrirajPoDatumu(this.filterDate).filter(
-        (event) => filteredByName.includes(event)
-      );
-    } else {
-      this.filteredEvents = filteredByName;
-    } */
   }
 
   filteredEvents: IEvent[] = [];
   events: IEvent[] = [];
 
-  constructor(private eventService: EventService) {}
+  constructor(
+    private eventService: EventService,
+    private authService: AuthService
+  ) {}
 
   filtriraj(filtrirajPo: string): IEvent[] {
     filtrirajPo = filtrirajPo.toLocaleLowerCase();
@@ -89,6 +84,13 @@ export class EventListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    //naslov
+    if (this.authService.isAuthenticated()) {
+      this.naslov = 'Pronađi događaje koji te interesuju ';
+    } else {
+      this.naslov = 'Aktuelni događaji na platformi';
+    }
+
     // this.events = this.eventService.getEvents();
     this.sub = this.eventService.getEvents().subscribe(
       /* (data) => {
@@ -106,5 +108,10 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  show(): boolean {
+    if (this.authService.isAdmin()) return true;
+    return false;
   }
 }

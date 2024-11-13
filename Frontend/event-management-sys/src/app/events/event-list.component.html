@@ -79,16 +79,18 @@
         </tbody>
       </table>
     </div>
-    <!-- Table end -->
-
-    <!--Footer start-->
-    <div class="card-footer">
-      <div class="add-button">
-        <button class="btn btn-outline-secondary btn-custom letters">
-          <i class="fa fa-plus"> Dodaj</i>
-        </button>
-      </div>
-    </div>
-    <!--Footer start-->
   </div>
+  <!-- Table end -->
+
+  <!--Footer start-->
+  @if(show()) {
+  <div class="card-footer">
+    <div class="add-button">
+      <a class="btn btn-purple letters-add" routerLink="/addEvent"
+        >Dodaj event</a
+      >
+    </div>
+  </div>
+  }
+  <!--Footer start-->
 </div>

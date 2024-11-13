@@ -39,7 +39,7 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe(
         (response) => {
           console.log('Prijavljeni ste:', response);
-          this.authService.saveToken(response);
+          this.authService.saveUser(response);
 
           //potvrda za uspesnu prijavu
           this.snackBar.open('Uspešna prijava!', 'Zatvori', {

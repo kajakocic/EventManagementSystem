@@ -1,4 +1,5 @@
 namespace projekat_kaja.DTOs;
+
 public class EventDTO
 {
     public int Id { get; set; }

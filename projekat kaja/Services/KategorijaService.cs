@@ -34,6 +34,7 @@ public class KategorijaService : IKategorijaService
     {
         return _unitOfWork.KategorijaRepositoriy.GetAll();
     }
+    
     public void DeleteKat(int id)
     {
         if (id <= 0)
