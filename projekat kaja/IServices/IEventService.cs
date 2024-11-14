@@ -4,11 +4,11 @@ using projekat_kaja.Models;
 namespace projekat_kaja.Services;
 public interface IEventService
 {
-    Event AddEvent(EventDTO eventDTO);
+    Event AddEvent(AddEventDTO addEventDTO);
     IEnumerable<EventDTO> GetAllEvents();
     Event GetEventById(int id);
     //IEnumerable<ReviewDTO> GetReviews(int eventid);
-    Event UpdateEvent(EventDTO eventDTO);
+    Event UpdateEvent(AddEventDTO eventDTO);
     void DeleteEvent(int id);
     IEnumerable<Event> FilterEvents(DateTime? datum = null, string? kategorija = null, string? lokacija = null);
 }

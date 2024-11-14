@@ -18,7 +18,7 @@ public class EventController : ControllerBase
 
     [Route("DodajEvent")]
     [HttpPost]
-    public IActionResult AddEvent([FromBody] EventDTO ev)
+    public IActionResult AddEvent([FromBody] AddEventDTO ev)
     {
         if (!ModelState.IsValid)
         {
@@ -27,8 +27,8 @@ public class EventController : ControllerBase
 
         try
         {
-            _eventService.AddEvent(ev);
-            return Ok("Event je dodat!");
+            var result = _eventService.AddEvent(ev);
+            return Ok(result);
         }
         catch (Exception e)
         {
@@ -109,7 +109,7 @@ public class EventController : ControllerBase
 
     [Route("izmeniEvent")]
     [HttpPut]
-    public IActionResult IzmeniEvent([FromBody] EventDTO ev)
+    public IActionResult IzmeniEvent([FromBody] AddEventDTO ev)
     {
         if (!ModelState.IsValid)
         {
@@ -118,7 +118,7 @@ public class EventController : ControllerBase
         try
         {
             var ue = _eventService.UpdateEvent(ev);
-            return Ok("Event je izmenjem!");
+            return Ok(ue);
 
         }
         catch (Exception e)
@@ -148,7 +148,7 @@ public class EventController : ControllerBase
         try
         {
             _eventService.DeleteEvent(id);
-            return Ok($"Event ID {id} je uklonjen.");
+            return Ok();
         }
         catch (Exception e)
         {

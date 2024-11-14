@@ -12,23 +12,23 @@ public class EventService : IEventService
     {
         _unitOfWork = unitOfWork;
     }
-    public Event AddEvent(EventDTO eventDTO)
+    public Event AddEvent(AddEventDTO addEventDTO)
     {
-        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.Naziv == eventDTO.Naziv);
+        var postojeciEv = _unitOfWork.EventRepository.Find(e => e.Naziv == addEventDTO.Naziv);
 
         if (postojeciEv.Any())
         {
-            throw new InvalidOperationException($"Event: {eventDTO.Naziv} već postoji.");
+            throw new InvalidOperationException($"Event: {addEventDTO.Naziv} već postoji.");
         }
 
-        var lokacija = _unitOfWork.LokacijaRepository.GetQueryable().FirstOrDefault(l => l.Naziv == eventDTO.Lokacija);
+        var lokacija = _unitOfWork.LokacijaRepository.GetQueryable().FirstOrDefault(l => l.ID == addEventDTO.LokacijaId);
 
         if (lokacija == null)
         {
             throw new InvalidOperationException("Prosledjena lokacija ne postoji.");
         }
 
-        var kategorija = _unitOfWork.KategorijaRepositoriy.GetQueryable().FirstOrDefault(k => k.Naziv == eventDTO.Kategorija);
+        var kategorija = _unitOfWork.KategorijaRepositoriy.GetQueryable().FirstOrDefault(k => k.ID == addEventDTO.KategorijaId);
 
         if (kategorija == null)
         {
@@ -37,12 +37,12 @@ public class EventService : IEventService
 
         var noviEv = new Event
         {
-            Naziv = eventDTO.Naziv,
-            Datum = eventDTO.Datum,
-            Kapacitet = eventDTO.Kapacitet,
-            Opis = eventDTO.Opis,
-            CenaKarte = eventDTO.CenaKarte,
-            URLimg = eventDTO.URLimg,
+            Naziv = addEventDTO.Naziv,
+            Datum = addEventDTO.Datum,
+            Kapacitet = addEventDTO.Kapacitet,
+            Opis = addEventDTO.Opis,
+            CenaKarte = addEventDTO.CenaKarte,
+            URLimg = addEventDTO.URLimg,
             KategorijaEvent = kategorija,
             LokacijaEvent = lokacija
         };
@@ -53,7 +53,7 @@ public class EventService : IEventService
         return noviEv;
     }
 
-    public Event UpdateEvent(EventDTO eventDTO)
+    public Event UpdateEvent(AddEventDTO eventDTO)
     {
         var postojeciEv = _unitOfWork.EventRepository.Find(e => e.ID == eventDTO.Id).FirstOrDefault();
 
@@ -62,42 +62,59 @@ public class EventService : IEventService
             throw new InvalidCastException("Event koji trežite ne postoji.");
         }
 
-        var naziv = postojeciEv.Naziv;
-        var opis = postojeciEv.Opis;
-        var imgUrl = postojeciEv.URLimg;
-        var kateg = postojeciEv.KategorijaEvent.Naziv;
-        var lokac = postojeciEv.LokacijaEvent.Naziv;
+        var lokacija = _unitOfWork.LokacijaRepository.Find(l => l.ID == eventDTO.LokacijaId).FirstOrDefault();
 
+        if (lokacija == null)
+        {
+            throw new InvalidCastException("Lokaciju koju trežite ne postoji.");
+        }
 
-        if (eventDTO.Naziv == "")
-            postojeciEv.Naziv = naziv;
-        else
-            postojeciEv.Naziv = eventDTO.Naziv;
+        var kategorija = _unitOfWork.KategorijaRepositoriy.Find(k => k.ID == eventDTO.KategorijaId).FirstOrDefault();
+
+        postojeciEv.Naziv = eventDTO.Naziv;
+        postojeciEv.Opis = eventDTO.Opis;
         postojeciEv.Datum = eventDTO.Datum;
-        postojeciEv.Kapacitet = eventDTO.Kapacitet;
-
-        if (eventDTO.Opis == "")
-            postojeciEv.Opis = opis;
-        else
-            postojeciEv.Opis = eventDTO.Opis;
-
         postojeciEv.CenaKarte = eventDTO.CenaKarte;
+        postojeciEv.URLimg = eventDTO.URLimg;
+        postojeciEv.LokacijaEvent = lokacija;
+        postojeciEv.KategorijaEvent = kategorija;
 
-        if (eventDTO.URLimg == "")
-            postojeciEv.URLimg = imgUrl;
-        else
-            postojeciEv.URLimg = eventDTO.URLimg;
+        // var naziv = postojeciEv.Naziv;
+        // var opis = postojeciEv.Opis;
+        // var imgUrl = postojeciEv.URLimg;
+        // var kateg = postojeciEv.KategorijaEvent.Naziv;
+        // var lokac = postojeciEv.LokacijaEvent.Naziv;
 
-        if (eventDTO.Lokacija == "")
-            postojeciEv.LokacijaEvent.Naziv = lokac;
-        else
-            postojeciEv.LokacijaEvent.Naziv = eventDTO.Lokacija;
-        if (eventDTO.Kategorija == "")
-            postojeciEv.KategorijaEvent.Naziv = kateg;
-        else
-            postojeciEv.KategorijaEvent.Naziv = eventDTO.Kategorija;
 
-            
+        // if (eventDTO.Naziv == "")
+        //     postojeciEv.Naziv = naziv;
+        // else
+        //     postojeciEv.Naziv = eventDTO.Naziv;
+        // postojeciEv.Datum = eventDTO.Datum;
+        // postojeciEv.Kapacitet = eventDTO.Kapacitet;
+
+        // if (eventDTO.Opis == "")
+        //     postojeciEv.Opis = opis;
+        // else
+        //     postojeciEv.Opis = eventDTO.Opis;
+
+        // postojeciEv.CenaKarte = eventDTO.CenaKarte;
+
+        // if (eventDTO.URLimg == "")
+        //     postojeciEv.URLimg = imgUrl;
+        // else
+        //     postojeciEv.URLimg = eventDTO.URLimg;
+
+        // if (eventDTO.Lokacija == "")
+        //     postojeciEv.LokacijaEvent.Naziv = lokac;
+        // else
+        //     postojeciEv.LokacijaEvent.Naziv = eventDTO.Lokacija;
+        // if (eventDTO.Kategorija == "")
+        //     postojeciEv.KategorijaEvent.Naziv = kateg;
+        // else
+        //     postojeciEv.KategorijaEvent.Naziv = eventDTO.Kategorija;
+
+
         _unitOfWork.EventRepository.Update(postojeciEv);
         _unitOfWork.EventRepository.SaveChanges();
         return postojeciEv;
@@ -119,7 +136,9 @@ public class EventService : IEventService
             CenaKarte = e.CenaKarte,
             URLimg = e.URLimg,
             Kategorija = e.KategorijaEvent.Naziv,
-            Lokacija = e.LokacijaEvent.Naziv
+            Lokacija = e.LokacijaEvent.Naziv,
+            LokacijaId = e.LokacijaEvent.ID,
+            KategorijaId = e.KategorijaEvent.ID
         });
         return eventDtos;
     }

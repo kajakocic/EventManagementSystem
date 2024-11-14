@@ -1,6 +1,6 @@
 namespace projekat_kaja.DTOs;
 
-public class EventDTO
+public class AddEventDTO
 {
     public int Id { get; set; }
     public string? Naziv { get; set; }
@@ -9,8 +9,6 @@ public class EventDTO
     public string? Opis { get; set; }
     public double CenaKarte { get; set; }
     public string? URLimg { get; set; }
-    public string? Kategorija { get; set; }
     public int KategorijaId { get; set; }
-    public string? Lokacija { get; set; }
     public int LokacijaId { get; set; }
 }

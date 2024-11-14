@@ -5,6 +5,7 @@ import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { ILocation } from './location';
 import { IKategorija } from './category';
 import { environment } from '../../environments/environment';
+import { IAddEvent } from './addEvent';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,8 @@ export class EventService {
   private eventUrl = 'http://localhost:5245/api/Event/prikaziEvente';
   private locUrl = 'http://localhost:5245/api/Location/PrikaziSveLokacije';
   private katUtl = 'http://localhost:5245/api/Kategorija/PrikaziSveKategorije';
+  private dodajEvUrl = 'http://localhost:5245/api/Event/DodajEvent';
+  private izmeniEvUrl = 'http://localhost:5245/api/Event/izmeniEvent';
   private evUrl = environment.eventUrl;
   constructor(private http: HttpClient) {}
 
@@ -50,8 +53,16 @@ export class EventService {
     );
   }
 
-  addEvent(eventData: IEvent): Observable<IEvent>{
-    return this.http.post<IEvent>(`${this.evUrl}/DodajEvent`, eventData);
+  addEvent(eventData: IAddEvent): Observable<IAddEvent> {
+    return this.http.post<IAddEvent>(this.dodajEvUrl, eventData);
+  }
+
+  deleteEvent(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.evUrl}/ObrisiEvent/${id}`);
+  }
+
+  updateEvent(eventData: IAddEvent): Observable<IEvent> {
+    return this.http.put<IEvent>(this.izmeniEvUrl, eventData);
   }
 
   private handleError(err: HttpErrorResponse) {

@@ -16,7 +16,8 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <strong>Ovaj dogadjaj održaće se</strong> {{ event.datum | date : "shortDate" }}
+          <strong>Ovaj dogadjaj održaće se</strong>
+          {{ event.datum | date : "shortDate" }}
         </div>
       </div>
       <div class="row">
@@ -52,12 +53,20 @@
       </button>
     </div>
 
-    <button class="btn btn-outline-secondary btn-custom letters">
-      <i class="fa fa-edit"></i> Izmeni
-    </button>
-    <button class="btn btn-outline-secondary btn-custom letters">
+    @if(show()){
+    <div class="add-button">
+      <a class="btn btn-purple letters-add" [routerLink]="['/editEvent', event.id]"
+        >Izmeni event</a
+      >
+    </div>
+    <button
+      class="btn btn-outline-secondary btn-custom letters"
+      (click)="onDelete()"
+    >
       <i class="fa fa-trash"></i> Obriši
     </button>
+    }
+
   </div>
   <!-- Footer end -->
 </div>

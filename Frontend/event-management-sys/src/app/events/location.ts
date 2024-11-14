@@ -1,4 +1,4 @@
 export interface ILocation {
   id: number;
-  naziv: string;
+  lokacija: string;
 }

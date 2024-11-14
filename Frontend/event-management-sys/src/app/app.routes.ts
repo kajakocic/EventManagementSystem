@@ -19,6 +19,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./addEvent/add-event.component').then((c) => c.AddEventComponent),
   },
+  // {
+  //   path: 'editEvent/:id',
+  //   loadComponent: () =>
+  //     import('./editEvent/edit-event.component').then(
+  //       (c) => c.EditEventComponent
+  //     ),
+  // },
+  {
+    path: 'editEvent/:id',
+    loadComponent: () =>
+      import('./addEvent/add-event.component').then((c) => c.AddEventComponent),
+  },
   {
     path: 'register',
     loadComponent: () =>
