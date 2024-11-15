@@ -34,7 +34,7 @@ public class UserService : IUserService
     {
         return _unitOfWork.UserRepository.Get(id);
     }
-    public List<RegistrationDTO> GetUserRegistrations(int userid)
+/*     public List<RegistrationDTO> GetUserRegistrations(int userid)
     {
         var korisnik = _unitOfWork.UserRepository.GetUserWhithEvent(userid);
         if (korisnik == null)
@@ -51,9 +51,9 @@ public class UserService : IUserService
             }).ToList();
 
         return registracije;
-    }
+    } */
 
-    public bool MakeReservation(int eventId, int userId, int brmesta)
+    /* public bool MakeReservation(int eventId, int userId, int brmesta)
     {
         var korisnik = _unitOfWork.UserRepository.Get(userId);
         if (korisnik == null)
@@ -87,7 +87,7 @@ public class UserService : IUserService
         }
         _unitOfWork.SaveChanges();
         return true;
-    }
+    } */
 
     public User RegisterUser(User user)
     {

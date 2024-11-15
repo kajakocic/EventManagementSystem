@@ -67,6 +67,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IKategorijaService, KategorijaService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUnitOfWOrk, UnitOfWork>();
+builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+
+
 
 var app = builder.Build();
 

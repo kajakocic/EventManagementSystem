@@ -11,6 +11,8 @@ public interface IUnitOfWOrk
     IKategorijaRepositoriy KategorijaRepositoriy { get; }
     ILocationRepository LokacijaRepository { get; }
 
+    IRegistrationRepository RegistrationRepository { get; }
+
     void SaveChanges();
 }
 
@@ -84,6 +86,19 @@ public class UnitOfWork : IUnitOfWOrk
                 lokacijaRepository = new LocationRepository(Context);
             }
             return lokacijaRepository;
+        }
+    }
+
+    private IRegistrationRepository registrationRepository;
+    IRegistrationRepository  IUnitOfWOrk.RegistrationRepository
+    {
+        get
+        {
+            if (registrationRepository == null)
+            {
+                registrationRepository = new RegistrationRepository(Context);
+            }
+            return registrationRepository;
         }
     }
 

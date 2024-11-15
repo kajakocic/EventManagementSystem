@@ -48,14 +48,14 @@ import { AuthService } from './auth/auth.service';
         <div class="col-md-3">
           <div class="sidebar">
             <ul class="nav flex-column">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link btn btn-purple letters" routerLink="/welcome"
                   >Dobrodošli</a
                 >
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link btn btn-purple letters" routerLink="/about"
-                  >O nama</a
+                  >Dobrodošli</a
                 >
               </li>
               <li class="nav-item">

@@ -14,4 +14,7 @@ public class Registration
     public User? UserEvent { get; set; }
     [Required]
     public Event? EventUser { get; set; }
+
+    [Required]
+    public int BrojMesta { get; set; }
 }

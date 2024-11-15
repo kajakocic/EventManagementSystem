@@ -10,21 +10,21 @@ public class EventRepository : GenericRepository<Event>, IEventRepositoriy
     {
     }
 
-    public override Event Update(Event x)
-    {
-        var ev = _context.Events.Single(e => e.ID == x.ID);
+    // public override Event Update(Event x)
+    // {
+    //     var ev = _context.Events.Single(e => e.ID == x.ID);
 
-        ev.Naziv = x.Naziv;
-        ev.Datum = x.Datum;
-        ev.Opis = x.Opis;
-        ev.CenaKarte = x.CenaKarte;
-        ev.URLimg = x.URLimg;
-        ev.KategorijaEvent.ID = x.KategorijaEvent.ID;
-        ev.LokacijaEvent.ID = x.LokacijaEvent.ID;
+    //     ev.Naziv = x.Naziv;
+    //     ev.Datum = x.Datum;
+    //     ev.Opis = x.Opis;
+    //     ev.CenaKarte = x.CenaKarte;
+    //     ev.URLimg = x.URLimg;
+    //     ev.KategorijaEvent.ID = x.KategorijaEvent.ID;
+    //     ev.LokacijaEvent.ID = x.LokacijaEvent.ID;
 
 
-        return base.Update(ev);
-    }
+    //     return base.Update(ev);
+    // }
 
     public override Event Get(int id)
     {

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using projekat_kaja.DTOs;
-using projekat_kaja.Models;
 using projekat_kaja.Services;
 
 namespace projekat_kaja.Controllers;

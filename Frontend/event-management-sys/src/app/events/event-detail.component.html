@@ -53,9 +53,28 @@
       </button>
     </div>
 
-    @if(show()){
+    @if(!show()){
+    <div class="add-reservation">
+      <div class="form-group letters">
+        <label for="brojMesta">Unesite broj mesta</label>
+        <input
+          type="number"
+          class="form-control"
+          id="brojMesta"
+          [(ngModel)]="brojMesta"
+          [min]="1"
+          required
+        />
+      </div>
+
+      <!-- Dugme za rezervaciju -->
+      <button class="btn letters" (click)="onSubmit()">Rezerviši</button>
+    </div>
+    } @if(show()){
     <div class="add-button">
-      <a class="btn btn-purple letters-add" [routerLink]="['/editEvent', event.id]"
+      <a
+        class="btn btn-outline-secondary btn-custom letters"
+        [routerLink]="['/editEvent', event.id]"
         >Izmeni event</a
       >
     </div>
@@ -66,7 +85,6 @@
       <i class="fa fa-trash"></i> Obriši
     </button>
     }
-
   </div>
   <!-- Footer end -->
 </div>
